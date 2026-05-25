@@ -1,15 +1,15 @@
-name: Webnovel Craft Auto Learning Every 5 Minutes
+name: Auto Webnovel Craft Learning 5m
 
 on:
   schedule:
-    # Every 5 minutes. Runs in GitHub Actions, so it works even when the local PC is off.
+    # Run every 5 minutes on GitHub Actions. This works even when the local PC is off.
     - cron: '*/5 * * * *'
 
 permissions:
   contents: write
 
 concurrency:
-  group: webnovel-craft-auto-learning
+  group: auto-webnovel-craft-learning-5m
   cancel-in-progress: false
 
 jobs:
