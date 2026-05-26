@@ -48,10 +48,10 @@
 - Không chạm vào các file Tập 4 đang có trạng thái bị xoá trong working tree.
 
 ## Auto Learning Status
-- Lần chạy gần nhất: 2026-05-25 22:46:15 UTC.
+- Lần chạy gần nhất: 2026-05-26 19:29:56 UTC.
 - Lịch GitHub Actions mong muốn: mỗi 30 phút (`*/30 * * * *`), chạy trên GitHub nên không phụ thuộc máy local.
-- Nguồn vừa học: MasterClass - Cliffhanger craft (https://www.masterclass.com/articles/how-to-write-a-cliffhanger-14-tips-for-writing-page-turning-cliffhangers-with-dan-brown-and-rl-stine).
+- Nguồn vừa học: TV Tropes - Apocalyptic Logistics (https://tvtropes.org/pmwiki/pmwiki.php/Main/ApocalypticLogistics).
 - Chế độ học: fallback.
-- Ghi chú batch: `/home/runner/work/story_ThanhMV/story_ThanhMV/research/learning-runs/2026-05-25.md`.
+- Ghi chú batch: `/home/runner/work/story_ThanhMV/story_ThanhMV/research/learning-runs/2026-05-26.md`.
 - Quy tắc: không viết demo, không viết chương mới, không sửa nội dung truyện chính, không chép văn nguồn.
 
