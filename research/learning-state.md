@@ -48,9 +48,9 @@
 - Không chạm vào các file Tập 4 đang có trạng thái bị xoá trong working tree.
 
 ## Auto Learning Status
-- Lần chạy gần nhất: 2026-06-07 08:38:44 UTC.
+- Lần chạy gần nhất: 2026-06-07 15:12:29 UTC.
 - Lịch GitHub Actions mong muốn: mỗi 30 phút (`*/30 * * * *`), chạy trên GitHub nên không phụ thuộc máy local.
-- Nguồn vừa học: Helping Writers Become Authors - Scene Structure (https://www.helpingwritersbecomeauthors.com/scene-structure/).
+- Nguồn vừa học: MasterClass - Cliffhanger craft (https://www.masterclass.com/articles/how-to-write-a-cliffhanger-14-tips-for-writing-page-turning-cliffhangers-with-dan-brown-and-rl-stine).
 - Chế độ học: fallback.
 - Ghi chú batch: `/home/runner/work/story_ThanhMV/story_ThanhMV/research/learning-runs/2026-06-07.md`.
 - Quy tắc: không viết demo, không viết chương mới, không sửa nội dung truyện chính, không chép văn nguồn.
