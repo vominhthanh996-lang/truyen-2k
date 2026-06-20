@@ -13,6 +13,14 @@ const els = {
 };
 
 const storageKey = "doctruyen_vip_state_v1";
+const audioVoicePresets = [
+  { id: "nu-cam-xuc", label: "Nữ cảm xúc" },
+  { id: "nam-tram", label: "Nam trầm" },
+  { id: "nu-cham-am", label: "Nữ chậm ấm" },
+  { id: "nam-cang-thang", label: "Nam căng thẳng" },
+  { id: "nu-nhe-nhang", label: "Nữ nhẹ" }
+];
+const audioSpeedOptions = [0.75, 0.9, 1, 1.15, 1.3, 1.5];
 let state = loadState();
 let activeRouteHash = "";
 let speechState = {
@@ -47,6 +55,8 @@ function loadState() {
     comments: {},
     readerSize: 19,
     darkReader: false,
+    audioVoice: "nu-cam-xuc",
+    audioSpeed: 1,
     lastRead: defaultLastRead(),
     chapterFilters: {}
   };
@@ -80,12 +90,23 @@ function getSpeech() {
   return window.speechSynthesis || null;
 }
 
+function selectedAudioVoice() {
+  return audioVoicePresets.some((voice) => voice.id === state.audioVoice)
+    ? state.audioVoice
+    : audioVoicePresets[0].id;
+}
+
+function selectedAudioSpeed() {
+  return audioSpeedOptions.includes(Number(state.audioSpeed)) ? Number(state.audioSpeed) : 1;
+}
+
 function audioKey(storyId, chapterId) {
   return `${storyId}:${chapterId}`;
 }
 
-function chapterAudioUrl(chapter) {
-  return chapter.audioUrl || chapter.audio || "";
+function chapterAudioUrl(chapter, voiceId = selectedAudioVoice()) {
+  const urls = chapter.audioUrls || {};
+  return urls[voiceId] || (voiceId === "nu-cam-xuc" ? chapter.audioUrl || chapter.audio || "" : "");
 }
 
 function splitSpeechChunks(chapter) {
@@ -178,7 +199,7 @@ function speakNextChunk() {
   const voice = preferredVoice();
   if (voice) utterance.voice = voice;
   utterance.lang = "vi-VN";
-  utterance.rate = 0.96;
+  utterance.rate = Math.min(1.5, Math.max(0.75, selectedAudioSpeed()));
   utterance.pitch = 1;
   utterance.onstart = () => {
     speechState.chunkProgress = 0;
@@ -244,6 +265,12 @@ function toggleSpeechPause() {
 function updateAudioStatus(message) {
   const status = document.querySelector("[data-audio-status]");
   if (status) status.textContent = message;
+}
+
+function applyGeneratedAudioSpeed() {
+  document.querySelectorAll("[data-generated-audio]").forEach((audio) => {
+    audio.playbackRate = selectedAudioSpeed();
+  });
 }
 
 function money(value) {
@@ -670,13 +697,16 @@ function chapterRow(storyId, chapter) {
 
 function renderAudioPanel(story, chapter, readable) {
   if (!readable) return "";
-  const audioUrl = chapterAudioUrl(chapter);
+  const voiceId = selectedAudioVoice();
+  const speed = selectedAudioSpeed();
+  const audioUrl = chapterAudioUrl(chapter, voiceId);
+  const voiceLabel = audioVoicePresets.find((voice) => voice.id === voiceId)?.label || "Nữ cảm xúc";
   const nativePlayer = audioUrl
-    ? `<audio controls preload="metadata" src="${escapeHtml(audioUrl)}"></audio>`
+    ? `<audio controls preload="metadata" src="${escapeHtml(audioUrl)}" data-generated-audio></audio>`
     : "";
   const modeText = audioUrl
-    ? "Đang có file MP3 cho chương này. Bạn có thể nghe bằng player hoặc dùng giọng đọc trình duyệt."
-    : "Chưa có file MP3 upload cho chương này, nên web dùng giọng đọc tiếng Việt của trình duyệt.";
+    ? `Đang có MP3 gen sẵn cho giọng ${voiceLabel}. Player bên dưới kéo tua qua lại được.`
+    : `Chưa có MP3 gen sẵn cho giọng ${voiceLabel}. Có thể dùng tạm giọng trình duyệt hoặc generate/upload file bằng script audio.`;
 
   return `
     <section class="audio-panel" data-audio-panel="${story.id}:${chapter.id}">
@@ -684,6 +714,24 @@ function renderAudioPanel(story, chapter, readable) {
         <span class="eyebrow">Nghe truyện</span>
         <h2>Audio chương này</h2>
         <p class="muted">${modeText}</p>
+      </div>
+      <div class="audio-controls">
+        <label>
+          <span>Giọng đọc</span>
+          <select data-audio-voice>
+            ${audioVoicePresets.map((voice) => `
+              <option value="${voice.id}" ${voice.id === voiceId ? "selected" : ""}>${voice.label}</option>
+            `).join("")}
+          </select>
+        </label>
+        <label>
+          <span>Tốc độ</span>
+          <select data-audio-speed>
+            ${audioSpeedOptions.map((option) => `
+              <option value="${option}" ${option === speed ? "selected" : ""}>${option}x</option>
+            `).join("")}
+          </select>
+        </label>
       </div>
       ${nativePlayer}
       <div class="audio-progress" aria-label="Tiến trình nghe">
@@ -698,7 +746,7 @@ function renderAudioPanel(story, chapter, readable) {
         <button class="btn btn-secondary" data-pause-speech>Tạm dừng / tiếp tục</button>
         <button class="btn btn-secondary" data-stop-speech>Dừng</button>
       </div>
-      <p class="audio-status"><span data-audio-status>Chưa phát audio.</span> <strong data-audio-progress-text>0%</strong></p>
+      <p class="audio-status"><span data-audio-status>${audioUrl ? "Sẵn sàng phát MP3 gen sẵn." : "Chưa có MP3 cho preset này."}</span> <strong data-audio-progress-text>0%</strong></p>
     </section>
   `;
 }
@@ -744,6 +792,7 @@ function renderReader(storyId, chapterId) {
       ${renderComments(story.id, chapter.id)}
     </article>
   `;
+  applyGeneratedAudioSpeed();
 }
 
 function paywallBlock(storyId, chapter) {
@@ -1027,6 +1076,24 @@ document.addEventListener("input", (event) => {
 });
 
 document.addEventListener("change", (event) => {
+  const voiceSelect = event.target.closest("[data-audio-voice]");
+  if (voiceSelect) {
+    state.audioVoice = voiceSelect.value;
+    stopSpeech();
+    saveState();
+    route();
+    return;
+  }
+
+  const speedSelect = event.target.closest("[data-audio-speed]");
+  if (speedSelect) {
+    state.audioSpeed = Number(speedSelect.value) || 1;
+    saveState();
+    applyGeneratedAudioSpeed();
+    updateAudioStatus(`Đã đổi tốc độ sang ${selectedAudioSpeed()}x.`);
+    return;
+  }
+
   const audioSeek = event.target.closest("[data-audio-seek]");
   if (!audioSeek) return;
   seekSpeechPercent(Number(audioSeek.value) || 0);

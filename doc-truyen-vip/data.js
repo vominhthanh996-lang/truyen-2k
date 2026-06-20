@@ -2044,6 +2044,9 @@ window.STORY_DATA = {
             "Nó chưa nhìn thấy họ.",
             "Nhưng sớm muộn gì cũng sẽ."
           ],
+          "audioUrls": {
+            "nu-cam-xuc": "audio/c005.mp3"
+          },
           "audioUrl": "audio/c005.mp3"
         },
         {

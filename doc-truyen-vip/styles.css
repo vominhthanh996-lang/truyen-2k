@@ -645,6 +645,34 @@ a {
   width: 100%;
 }
 
+.audio-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(150px, 0.45fr);
+  gap: 12px;
+}
+
+.audio-controls label {
+  display: grid;
+  gap: 6px;
+}
+
+.audio-controls span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.audio-controls select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
 .audio-progress {
   height: 10px;
   overflow: hidden;
@@ -875,6 +903,12 @@ body.reader-dark .search-box input {
 
 body.reader-dark .search-box input::placeholder {
   color: #7f8aa0;
+}
+
+body.reader-dark .audio-controls select {
+  border-color: var(--line);
+  background: #111827;
+  color: var(--text);
 }
 
 body.reader-dark .reader-content {

@@ -6,6 +6,13 @@ from pathlib import Path
 ROOT = Path("phe-tho-ta-nhat-duoc-ca-the-gioi")
 OUT = Path("doc-truyen-vip/data.js")
 AUDIO_DIR = Path("doc-truyen-vip/audio")
+AUDIO_PRESETS = [
+    ("nu-cam-xuc", ""),
+    ("nam-tram", "-nam-tram"),
+    ("nu-cham-am", "-nu-cham-am"),
+    ("nam-cang-thang", "-nam-cang-thang"),
+    ("nu-nhe-nhang", "-nu-nhe-nhang"),
+]
 
 
 def natural_key(path: Path):
@@ -58,9 +65,15 @@ def build():
             "price": 0 if idx <= 5 else 8,
             "body": markdown_blocks(text),
         }
-        audio_path = AUDIO_DIR / f"{chapter_id}.mp3"
-        if audio_path.exists():
-            chapter["audioUrl"] = f"audio/{chapter_id}.mp3"
+        audio_urls = {}
+        for preset_id, suffix in AUDIO_PRESETS:
+            audio_path = AUDIO_DIR / f"{chapter_id}{suffix}.mp3"
+            if audio_path.exists():
+                audio_urls[preset_id] = f"audio/{chapter_id}{suffix}.mp3"
+        if audio_urls:
+            chapter["audioUrls"] = audio_urls
+            if "nu-cam-xuc" in audio_urls:
+                chapter["audioUrl"] = audio_urls["nu-cam-xuc"]
         chapters.append(chapter)
 
     data = {
