@@ -19,6 +19,7 @@ let speechState = {
   key: "",
   chunks: [],
   index: 0,
+  chunkProgress: 0,
   playing: false,
   paused: false
 };
@@ -110,8 +111,34 @@ function splitSpeechChunks(chapter) {
 function stopSpeech() {
   const speech = getSpeech();
   if (speech) speech.cancel();
-  speechState = { key: "", chunks: [], index: 0, playing: false, paused: false };
+  speechState = { key: "", chunks: [], index: 0, chunkProgress: 0, playing: false, paused: false };
   updateAudioStatus("Đã dừng nghe.");
+  updateAudioProgress(0, "0%");
+}
+
+function preferredVoice() {
+  const speech = getSpeech();
+  if (!speech) return null;
+  const voices = speech.getVoices();
+  return (
+    voices.find((voice) => voice.lang === "vi-VN" && /hoai|my|female|natural/i.test(voice.name)) ||
+    voices.find((voice) => voice.lang === "vi-VN") ||
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith("vi")) ||
+    null
+  );
+}
+
+function audioPercent() {
+  if (!speechState.chunks.length) return 0;
+  const current = speechState.index + speechState.chunkProgress;
+  return Math.min(100, Math.max(0, Math.round((current / speechState.chunks.length) * 100)));
+}
+
+function updateAudioProgress(percent = audioPercent(), label = `${percent}%`) {
+  const fill = document.querySelector("[data-audio-progress]");
+  const text = document.querySelector("[data-audio-progress-text]");
+  if (fill) fill.style.width = `${percent}%`;
+  if (text) text.textContent = label;
 }
 
 function speakNextChunk() {
@@ -119,17 +146,31 @@ function speakNextChunk() {
   if (!speech || !speechState.playing || speechState.paused) return;
   const text = speechState.chunks[speechState.index];
   if (!text) {
-    speechState = { ...speechState, playing: false, paused: false, index: 0 };
+    speechState = { ...speechState, playing: false, paused: false, index: 0, chunkProgress: 0 };
+    updateAudioProgress(100, "100%");
     updateAudioStatus("Đã nghe hết chương.");
     return;
   }
 
   const utterance = new SpeechSynthesisUtterance(text);
+  const voice = preferredVoice();
+  if (voice) utterance.voice = voice;
   utterance.lang = "vi-VN";
   utterance.rate = 0.96;
   utterance.pitch = 1;
+  utterance.onstart = () => {
+    speechState.chunkProgress = 0;
+    updateAudioProgress();
+  };
+  utterance.onboundary = (event) => {
+    if (!text.length || typeof event.charIndex !== "number") return;
+    speechState.chunkProgress = Math.min(0.98, Math.max(0, event.charIndex / text.length));
+    updateAudioProgress();
+  };
   utterance.onend = () => {
     speechState.index += 1;
+    speechState.chunkProgress = 0;
+    updateAudioProgress();
     speakNextChunk();
   };
   utterance.onerror = () => {
@@ -153,9 +194,14 @@ function startSpeech(storyId, chapter) {
     key,
     chunks: splitSpeechChunks(chapter),
     index: 0,
+    chunkProgress: 0,
     playing: true,
     paused: false
   };
+  updateAudioProgress(0, "0%");
+  if (!preferredVoice()) {
+    updateAudioStatus("Đang dùng giọng mặc định của trình duyệt. Nếu chưa nghe thấy, thử bấm lại sau 1 giây.");
+  }
   speakNextChunk();
 }
 
@@ -606,21 +652,27 @@ function renderAudioPanel(story, chapter, readable) {
   const nativePlayer = audioUrl
     ? `<audio controls preload="metadata" src="${escapeHtml(audioUrl)}"></audio>`
     : "";
+  const modeText = audioUrl
+    ? "Đang có file MP3 cho chương này. Bạn có thể nghe bằng player hoặc dùng giọng đọc trình duyệt."
+    : "Chưa có file MP3 upload cho chương này, nên web dùng giọng đọc tiếng Việt của trình duyệt.";
 
   return `
     <section class="audio-panel" data-audio-panel="${story.id}:${chapter.id}">
       <div>
         <span class="eyebrow">Nghe truyện</span>
         <h2>Audio chương này</h2>
-        <p class="muted">Bấm nghe để trình duyệt đọc chương bằng giọng tiếng Việt. Khi có file MP3 tạo sẵn, web sẽ ưu tiên phát file upload.</p>
+        <p class="muted">${modeText}</p>
       </div>
       ${nativePlayer}
+      <div class="audio-progress" aria-label="Tiến trình nghe">
+        <span data-audio-progress style="width:0%"></span>
+      </div>
       <div class="audio-actions">
         <button class="btn btn-primary" data-speak-chapter="${story.id}:${chapter.id}">Nghe chương</button>
         <button class="btn btn-secondary" data-pause-speech>Tạm dừng / tiếp tục</button>
         <button class="btn btn-secondary" data-stop-speech>Dừng</button>
       </div>
-      <p class="audio-status" data-audio-status>Chưa phát audio.</p>
+      <p class="audio-status"><span data-audio-status>Chưa phát audio.</span> <strong data-audio-progress-text>0%</strong></p>
     </section>
   `;
 }
@@ -961,6 +1013,11 @@ els.menuToggle.addEventListener("click", () => {
 window.addEventListener("hashchange", () => {
   els.sidebar.classList.remove("open");
   route();
+});
+
+getSpeech()?.addEventListener?.("voiceschanged", () => {
+  if (!speechState.playing) return;
+  updateAudioStatus("Đã sẵn sàng giọng đọc tiếng Việt.");
 });
 
 renderAccount();
