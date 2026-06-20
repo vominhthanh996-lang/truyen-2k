@@ -273,6 +273,33 @@ function applyGeneratedAudioSpeed() {
   });
 }
 
+function currentGeneratedAudio() {
+  return document.querySelector("[data-generated-audio]");
+}
+
+function updateGeneratedAudioProgress(audio) {
+  if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+  const percent = Math.min(100, Math.max(0, Math.round((audio.currentTime / audio.duration) * 100)));
+  updateAudioProgress(percent, `${percent}%`);
+}
+
+function playAudioForChapter(storyId, chapter) {
+  const audio = currentGeneratedAudio();
+  if (audio) {
+    stopSpeech();
+    audio.playbackRate = selectedAudioSpeed();
+    audio.play()
+      .then(() => {
+        updateAudioStatus(`Đang phát MP3 gen sẵn ở tốc độ ${selectedAudioSpeed()}x.`);
+      })
+      .catch(() => {
+        updateAudioStatus("Trình duyệt chặn autoplay. Bấm trực tiếp nút play trên player MP3.");
+      });
+    return;
+  }
+  startSpeech(storyId, chapter);
+}
+
 function money(value) {
   return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value);
 }
@@ -981,7 +1008,7 @@ document.addEventListener("click", (event) => {
   if (speakButton) {
     const [storyId, chapterId] = speakButton.dataset.speakChapter.split(":");
     const chapter = getChapter(storyId, chapterId);
-    if (chapter) startSpeech(storyId, chapter);
+    if (chapter) playAudioForChapter(storyId, chapter);
   }
 
   if (event.target.closest("[data-pause-speech]")) {
@@ -1054,6 +1081,12 @@ document.addEventListener("input", (event) => {
   const audioSeek = event.target.closest("[data-audio-seek]");
   if (audioSeek) {
     const percent = Number(audioSeek.value) || 0;
+    const audio = currentGeneratedAudio();
+    if (audio && Number.isFinite(audio.duration) && audio.duration > 0) {
+      audio.currentTime = (percent / 100) * audio.duration;
+      updateGeneratedAudioProgress(audio);
+      return;
+    }
     updateAudioProgress(percent, `${percent}%`);
     return;
   }
@@ -1091,13 +1124,57 @@ document.addEventListener("change", (event) => {
     saveState();
     applyGeneratedAudioSpeed();
     updateAudioStatus(`Đã đổi tốc độ sang ${selectedAudioSpeed()}x.`);
+    if (speechState.playing && !speechState.paused) {
+      getSpeech()?.cancel();
+      setTimeout(speakNextChunk, 80);
+    }
     return;
   }
 
   const audioSeek = event.target.closest("[data-audio-seek]");
   if (!audioSeek) return;
+  const audio = currentGeneratedAudio();
+  if (audio && Number.isFinite(audio.duration) && audio.duration > 0) {
+    audio.currentTime = ((Number(audioSeek.value) || 0) / 100) * audio.duration;
+    updateGeneratedAudioProgress(audio);
+    return;
+  }
   seekSpeechPercent(Number(audioSeek.value) || 0);
 });
+
+document.addEventListener("timeupdate", (event) => {
+  const audio = event.target.closest?.("[data-generated-audio]");
+  if (!audio) return;
+  updateGeneratedAudioProgress(audio);
+}, true);
+
+document.addEventListener("loadedmetadata", (event) => {
+  const audio = event.target.closest?.("[data-generated-audio]");
+  if (!audio) return;
+  audio.playbackRate = selectedAudioSpeed();
+  updateGeneratedAudioProgress(audio);
+}, true);
+
+document.addEventListener("ended", (event) => {
+  const audio = event.target.closest?.("[data-generated-audio]");
+  if (!audio) return;
+  updateAudioProgress(100, "100%");
+  updateAudioStatus("Đã nghe hết MP3.");
+}, true);
+
+document.addEventListener("play", (event) => {
+  const audio = event.target.closest?.("[data-generated-audio]");
+  if (!audio) return;
+  stopSpeech();
+  audio.playbackRate = selectedAudioSpeed();
+  updateAudioStatus(`Đang phát MP3 gen sẵn ở tốc độ ${selectedAudioSpeed()}x.`);
+}, true);
+
+document.addEventListener("pause", (event) => {
+  const audio = event.target.closest?.("[data-generated-audio]");
+  if (!audio || audio.ended) return;
+  updateAudioStatus("Đã tạm dừng MP3.");
+}, true);
 
 els.closeCheckout.addEventListener("click", () => {
   els.modal.hidden = true;

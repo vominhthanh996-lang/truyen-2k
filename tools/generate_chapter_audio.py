@@ -11,6 +11,7 @@ from pathlib import Path
 
 DATA_JS = Path("doc-truyen-vip/data.js")
 OUT_DIR = Path("doc-truyen-vip/audio")
+VIDEO_VOICE_SCRIPT = Path("E:/ThanhMV/auto-video-generator/scripts/generate_voice_edge.py")
 DEFAULT_VOICE = "vi-VN-HoaiMyNeural"
 MAX_CHARS = 900
 VOICE_PRESETS = {
@@ -20,6 +21,8 @@ VOICE_PRESETS = {
         "rate": "-6%",
         "pitch": "+0Hz",
         "suffix": "",
+        "video_voice": "vi-female",
+        "video_style": "story-emotional",
     },
     "nam-tram": {
         "label": "Nam trầm",
@@ -27,6 +30,8 @@ VOICE_PRESETS = {
         "rate": "-8%",
         "pitch": "-4Hz",
         "suffix": "-nam-tram",
+        "video_voice": "vi-male",
+        "video_style": "wasteland-dark",
     },
     "nu-cham-am": {
         "label": "Nữ chậm ấm",
@@ -34,6 +39,8 @@ VOICE_PRESETS = {
         "rate": "-14%",
         "pitch": "-2Hz",
         "suffix": "-nu-cham-am",
+        "video_voice": "vi-female",
+        "video_style": "plain",
     },
     "nam-cang-thang": {
         "label": "Nam căng thẳng",
@@ -41,6 +48,8 @@ VOICE_PRESETS = {
         "rate": "+2%",
         "pitch": "+3Hz",
         "suffix": "-nam-cang-thang",
+        "video_voice": "vi-male",
+        "video_style": "story-emotional",
     },
     "nu-nhe-nhang": {
         "label": "Nữ nhẹ",
@@ -48,6 +57,8 @@ VOICE_PRESETS = {
         "rate": "-4%",
         "pitch": "+4Hz",
         "suffix": "-nu-nhe-nhang",
+        "video_voice": "vi-female",
+        "video_style": "wasteland-dark",
     },
 }
 
@@ -70,6 +81,65 @@ def load_data():
 def chapter_text(chapter):
     paragraphs = [str(item).strip() for item in chapter.get("body", []) if str(item).strip()]
     return "\n\n".join(paragraphs)
+
+
+def generate_with_video_voice(chapter, output, preset, overwrite=False):
+    if not VIDEO_VOICE_SCRIPT.exists():
+        raise RuntimeError(f"Video voice script not found: {VIDEO_VOICE_SCRIPT}")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=f"{chapter['id']}-video-voice-") as temp_name:
+        temp_dir = Path(temp_name)
+        parts_dir = temp_dir / "parts"
+        parts_dir.mkdir(parents=True, exist_ok=True)
+        storyboard = temp_dir / "storyboard.json"
+        chunks = chapter_chunks(chapter, max_chars=1200)
+        scenes = []
+        parts = []
+        for index, text in enumerate(chunks, start=1):
+            part = parts_dir / f"part-{index:03d}.mp3"
+            parts.append(part)
+            scenes.append(
+                {
+                    "id": f"{chapter['id']}-{index:03d}",
+                    "duration": 30,
+                    "audio": str(part.resolve()),
+                    "narration": text,
+                    "text": chapter["title"],
+                    "subtitle": text,
+                }
+            )
+        config = {
+            "title": chapter["title"],
+            "width": 1080,
+            "height": 1920,
+            "fps": 30,
+            "scenes": scenes,
+            "music": None,
+        }
+        storyboard.write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
+        cmd = [
+            sys.executable,
+            str(VIDEO_VOICE_SCRIPT),
+            "--storyboard",
+            str(storyboard),
+            "--voice",
+            preset["video_voice"],
+            "--voice-style",
+            preset["video_style"],
+        ]
+        if overwrite:
+            cmd.append("--overwrite")
+        subprocess.run(cmd, check=True)
+        for part in parts:
+            if not part.exists() or part.stat().st_size < 1024:
+                raise RuntimeError(f"Generated video voice part missing or too small: {part}")
+        temp_output = output.with_suffix(".tmp.mp3")
+        if temp_output.exists():
+            temp_output.unlink()
+        concat_mp3(parts, temp_output)
+        if not temp_output.exists() or temp_output.stat().st_size < 1024:
+            raise RuntimeError(f"Generated output is too small: {temp_output}")
+        temp_output.replace(output)
 
 
 def chapter_chunks(chapter, max_chars=MAX_CHARS):
@@ -184,6 +254,7 @@ async def main():
     parser.add_argument("--all", action="store_true", help="Generate every chapter.")
     parser.add_argument("--limit", type=int, default=0, help="Generate at most N chapters.")
     parser.add_argument("--preset", choices=sorted(VOICE_PRESETS), default="nu-cam-xuc", help="Narration voice preset.")
+    parser.add_argument("--engine", choices=["video", "direct"], default="video", help="Use gen-video voice pipeline or direct Edge TTS.")
     parser.add_argument("--voice", default=DEFAULT_VOICE, help="Edge TTS voice name.")
     parser.add_argument("--rate", help="Edge TTS rate, for example -8% or +2%.")
     parser.add_argument("--pitch", help="Edge TTS pitch, for example -4Hz or +3Hz.")
@@ -195,12 +266,15 @@ async def main():
     if not args.all and not args.chapter:
         parser.error("Use --chapter c001 or --all.")
 
-    try:
-        import edge_tts
-    except ImportError as exc:
-        raise SystemExit(
-            "Missing edge-tts. Install it with: python -m pip install edge-tts"
-        ) from exc
+    edge_tts = None
+    if args.engine == "direct":
+        try:
+            import edge_tts as edge_tts_module
+            edge_tts = edge_tts_module
+        except ImportError as exc:
+            raise SystemExit(
+                "Missing edge-tts. Install it with: python -m pip install edge-tts"
+            ) from exc
 
     data = load_data()
     chapters = []
@@ -226,17 +300,20 @@ async def main():
             log(f"skip {chapter_id}: {output}")
         else:
             log(f"generate {chapter_id} [{args.preset} / {voice} / {rate} / {pitch}]: {chapter['title']}")
-            await generate_chapter_mp3(
-                edge_tts,
-                chapter,
-                voice,
-                output,
-                overwrite=args.overwrite,
-                max_chars=args.max_chars,
-                retries=args.retries,
-                rate=rate,
-                pitch=pitch,
-            )
+            if args.engine == "video":
+                generate_with_video_voice(chapter, output, preset, overwrite=args.overwrite)
+            else:
+                await generate_chapter_mp3(
+                    edge_tts,
+                    chapter,
+                    voice,
+                    output,
+                    overwrite=args.overwrite,
+                    max_chars=args.max_chars,
+                    retries=args.retries,
+                    rate=rate,
+                    pitch=pitch,
+                )
         manifest.append(
             {
                 "storyId": story["id"],
