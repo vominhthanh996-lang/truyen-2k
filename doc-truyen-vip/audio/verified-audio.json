@@ -8,7 +8,7 @@
       "duration": 785.921625,
       "provider": "edge",
       "verified": true,
-      "verifiedAt": "2026-06-24T02:51:14.709691+00:00"
+      "verifiedAt": "2026-06-24T07:59:30.681797+00:00"
     },
     {
       "chapterId": "c001",
@@ -18,7 +18,87 @@
       "duration": 821.329958,
       "provider": "edge",
       "verified": true,
-      "verifiedAt": "2026-06-24T02:51:14.671532+00:00"
+      "verifiedAt": "2026-06-24T07:59:29.945348+00:00"
+    },
+    {
+      "chapterId": "c002",
+      "preset": "nu-cam-xuc",
+      "file": "c002.mp3",
+      "size": 8909637,
+      "duration": 1080.460667,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T07:59:31.345245+00:00"
+    },
+    {
+      "chapterId": "c003",
+      "preset": "nu-cam-xuc",
+      "file": "c003.mp3",
+      "size": 8097093,
+      "duration": 978.786875,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T04:41:11.295125+00:00"
+    },
+    {
+      "chapterId": "c004",
+      "preset": "nu-cam-xuc",
+      "file": "c004.mp3",
+      "size": 7374597,
+      "duration": 894.385958,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T04:41:11.377820+00:00"
+    },
+    {
+      "chapterId": "c005",
+      "preset": "nu-cam-xuc",
+      "file": "c005.mp3",
+      "size": 6586125,
+      "duration": 800.178125,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T04:41:11.462653+00:00"
+    },
+    {
+      "chapterId": "c006",
+      "preset": "nu-cam-xuc",
+      "file": "c006.mp3",
+      "size": 5158653,
+      "duration": 625.952833,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T06:49:40.022569+00:00"
+    },
+    {
+      "chapterId": "c007",
+      "preset": "nu-cam-xuc",
+      "file": "c007.mp3",
+      "size": 4951221,
+      "duration": 602.95575,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T06:49:40.064568+00:00"
+    },
+    {
+      "chapterId": "c008",
+      "preset": "nu-cam-xuc",
+      "file": "c008.mp3",
+      "size": 4898085,
+      "duration": 595.768833,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T06:49:40.105589+00:00"
+    },
+    {
+      "chapterId": "c009",
+      "preset": "nu-cam-xuc",
+      "file": "c009.mp3",
+      "size": 12267765,
+      "duration": 1485.870667,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-06-24T06:49:40.146898+00:00"
     }
   ]
 }

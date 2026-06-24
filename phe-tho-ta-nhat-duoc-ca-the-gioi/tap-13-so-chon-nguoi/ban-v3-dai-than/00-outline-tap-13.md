@@ -13,6 +13,7 @@ Tập này phải đẩy căng theo hướng: chứng cứ càng nhiều, nguy h
 - **Tần Dã:** dùng nhịp gõ trong Tập 12 làm vết gen dao động. Anh chưa mất mình, nhưng mã HN-07 bắt đầu phản ứng với vài ký hiệu trong sổ.
 - **Mụ Hồng Muối:** chưa chết. Mụ giữ nửa mảnh tên em trai Lan Sẹo và có thể bán nó cho người khác.
 - **Đội Thu Danh:** một nhóm săn sổ, săn người có tên, nhận lệnh từ mạng lưới của Tống Nghiễn. Họ không cướp nước trước; họ cướp danh tính.
+- **Thú bị xua tới cổng:** tiếng còi bụi, mùi máu và mùi nước xám khiến quạ mù/chó rêu quanh vùng đổi hướng. Đội Thu Danh sẽ lợi dụng đàn thú như một bức tường sống để ép Cổng Xám mở cửa hoặc giao người.
 
 ## Nhân Vật/Thế Lực Mới
 
@@ -29,9 +30,9 @@ Tập này phải đẩy căng theo hướng: chứng cứ càng nhiều, nguy h
 4. **Còi Bụi Ba Tiếng Ngắn:** mụ Hồng Muối hoặc tay sai gửi tín hiệu tới gần Cổng Xám. Lan Sẹo nghe ra đó là còi gọi nợ. Em trai nàng trở thành điểm yếu.
 5. **Đội Thu Danh Đến Trước Cổng:** Kỷ Bút xuất hiện, không đòi nước, chỉ đòi “trả lại người trên danh sách”. Hắn đưa ra giấy hợp lệ theo luật thành.
 6. **Không Ai Ký Thay Một Đứa Trẻ:** nhóm trẻ bị yêu cầu điểm chỉ để xác nhận “tự nguyện vào Cổng Xám”. Lâm Tịch từ chối, khiến Cổng bị cắt một đường mua thuốc.
-7. **Đêm Bị Trói Bằng Tên:** Đội Thu Danh bắt một nhóm người ngoài hàng rào, buộc Cổng Xám chọn: mở cổng cứu họ hay giữ an toàn cho người bên trong.
+7. **Đêm Bị Trói Bằng Tên:** Đội Thu Danh bắt một nhóm người ngoài hàng rào, bôi mồi máu và dầu gọi chó rêu lên dây trói, buộc Cổng Xám chọn: mở cổng cứu họ hay giữ an toàn cho người bên trong khi quạ mù bắt đầu hạ thấp.
 8. **Tần Dã Không Đọc Ký Hiệu Thứ Bảy:** trong lúc giải mã sổ, ký hiệu thứ bảy làm Tần Dã suýt trượt về mã cũ. Lâm Tịch phải gọi anh bằng tên thật, không bằng mã.
-9. **Bắn Vỡ Con Dấu:** đấu súng/truy đuổi quanh kho nước. Lâm Tịch dùng lỗi con dấu và nước xám để lật ngược quyền lực giấy tờ của Kỷ Bút.
+9. **Bắn Vỡ Con Dấu:** đấu súng/truy đuổi quanh kho nước trong lúc đàn chó rêu bị xua tới. Lâm Tịch dùng lỗi con dấu, nước xám và hướng gió để lật ngược quyền lực giấy tờ của Kỷ Bút, nhưng phải trả giá bằng nước rửa độc và một cửa phụ bị cào thủng.
 10. **Tên Đầu Tiên Được Giấu Đi:** Cổng Xám thắng nhỏ, giữ được nhóm trẻ và một phần sổ, nhưng phải tạo luật mới: có những cái tên không được công bố. Cuối tập lộ một dòng trong sổ có liên quan đến thân xác cũ của Lâm Tịch.
 
 ## Gate Cao Trào Bắt Buộc
@@ -40,6 +41,7 @@ Tập này phải đẩy căng theo hướng: chứng cứ càng nhiều, nguy h
 - Một cảnh lòng người méo mó: dân trong cổng nghi ngờ người mới, hoặc người được cứu tranh phần người cứu.
 - Một cảnh đấu trí bằng giấy tờ/sổ tên, không chỉ súng.
 - Một cảnh hành động lớn: truy đuổi hoặc đấu súng quanh kho nước/cổng/cống thấp.
+- Một cảnh thú biến dị chen vào trận người với người: Đội Thu Danh dùng mồi máu/dầu gọi chó rêu/quạ mù để ép Cổng Xám, buộc Lâm Tịch vừa giữ người vừa giữ cổng.
 - Một cảnh Tần Dã bị kéo gần mã cũ, nhưng được gọi lại bằng tên người.
 - Một lối thoát gieo trước: lỗi mực xanh, dấu tay giả, còi bụi, dây phản ứng của Bé Rút, hoặc luật Cổng Xám.
 - Kết tập phải mở bí mật về Lâm Tịch/thân xác cũ hoặc Tống Nghiễn.

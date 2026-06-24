@@ -16,6 +16,10 @@ VIDEO_VOICE_SCRIPT = Path("E:/ThanhMV/auto-video-generator/scripts/generate_voic
 DEFAULT_VOICE = "vi-VN-HoaiMyNeural"
 MAX_CHARS = 900
 EDGE_REQUIRED_PROVIDER = "edge"
+for extra_packages in (Path(".python-packages"), Path("E:/ThanhMV/python-packages")):
+    if extra_packages.exists():
+        sys.path.insert(0, str(extra_packages.resolve()))
+
 VOICE_PRESETS = {
     "nu-cam-xuc": {
         "label": "Hoài My - nữ Việt",

@@ -27,6 +27,12 @@ TITLE_OVERRIDES = {
     "thuoc-khong-doi-nguoi": "Thuốc Không Đổi Người",
     "cua-vang-mo-ba-ngay": "Cửa Vàng Mở Ba Ngày",
     "so-chon-nguoi": "Sổ Chọn Người",
+    "dau-chan-dan-toi-o-con": "Dấu Chân Dẫn Tới Ổ Con",
+    "tram-so-khong-duoi-chan": "Trạm Số Không Dưới Chân",
+    "keo-nguoc-day-san-tram": "Kéo Ngược Dây Săn Trạm",
+    "duong-bac-khong-mo-cho-nguoi-khong-ten": "Đường Bắc Không Mở Cho Người Không Tên",
+    "mieng-ranh-phu-lam-ban": "Miệng Rãnh Phủ Làm Bàn",
+    "doi-thu-hoi-den-trong-tieng-go": "Đội Thu Hồi Đến Trong Tiếng Gõ",
 }
 
 
