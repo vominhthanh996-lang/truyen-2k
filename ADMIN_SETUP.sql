@@ -1,5 +1,5 @@
--- Run this once in Supabase SQL Editor after your owner account has signed up.
--- Replace YOUR_EMAIL@example.com with the email you use to log in to Truyen 2K.
+-- Run this once in Supabase SQL Editor after this account exists in Authentication > Users.
+-- Only Vominhthanh996@gmail.com will be kept as admin.
 
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -121,9 +121,25 @@ create policy "Admins can read coin transactions"
   to authenticated
   using (public.is_admin());
 
-insert into public.admin_users (user_id, role)
-select id, 'owner'
-  from auth.users
- where email = 'YOUR_EMAIL@example.com'
-on conflict (user_id) do update
-  set role = excluded.role;
+do $$
+declare
+  owner_id uuid;
+begin
+  select id
+    into owner_id
+    from auth.users
+   where lower(email) = lower('Vominhthanh996@gmail.com')
+   limit 1;
+
+  if owner_id is null then
+    raise exception 'Admin account Vominhthanh996@gmail.com does not exist yet. Create it in Authentication > Users first.';
+  end if;
+
+  delete from public.admin_users
+   where user_id <> owner_id;
+
+  insert into public.admin_users (user_id, role)
+  values (owner_id, 'owner')
+  on conflict (user_id) do update
+    set role = excluded.role;
+end $$;
