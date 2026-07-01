@@ -325,6 +325,7 @@ async function initAuth() {
   }
   const hadAuthRedirect = isAuthRedirectHash();
   handleAuthRedirectNotice();
+  if (hadAuthRedirect) await exchangeAuthCodeFromRedirect();
   const { data } = await supabaseClient.auth.getSession();
   authSession = data?.session || null;
   authUser = authSession?.user || null;
@@ -402,6 +403,21 @@ function handleAuthRedirectNotice() {
     ? "Link xác nhận đã hết hạn. Bấm gửi lại email xác nhận."
     : "Không xác nhận được email. Thử gửi lại link xác nhận.");
   history.replaceState(null, "", `${location.pathname}#/`);
+}
+
+async function exchangeAuthCodeFromRedirect() {
+  if (!supabaseClient) return false;
+  const params = authRedirectParams();
+  const code = params.get("code");
+  if (!code) return false;
+
+  const { error } = await supabaseClient.auth.exchangeCodeForSession(code);
+  if (error) {
+    toast("Link xác nhận không hợp lệ hoặc đã hết hạn. Bấm gửi lại email xác nhận.");
+    history.replaceState(null, "", `${location.pathname}#/`);
+    return false;
+  }
+  return true;
 }
 
 function normalizeCatalogStory(story) {
