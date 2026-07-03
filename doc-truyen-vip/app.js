@@ -1277,7 +1277,8 @@ function renderHome() {
 function renderLibrary() {
   const query = els.search.value.trim().toLowerCase();
   const filtered = stories.filter((story) => {
-    const haystack = `${story.title} ${story.author} ${story.genre.join(" ")} ${story.summary}`.toLowerCase();
+    const chapterTitles = (story.chapters || []).map((chapter) => chapter.title).join(" ");
+    const haystack = `${story.title} ${story.author} ${story.genre.join(" ")} ${story.summary} ${chapterTitles}`.toLowerCase();
     return haystack.includes(query);
   });
 
@@ -1956,7 +1957,7 @@ function openAuthModal() {
   els.checkout.innerHTML = `
     <span class="eyebrow">Tài khoản</span>
     <h2 id="checkoutTitle">Đăng nhập Truyện 2K</h2>
-    <p class="muted">Tạo tài khoản bằng email. Supabase sẽ gửi link xác nhận, bấm link trong email để hoàn tất.</p>
+    <p class="muted">Dùng email để tạo tài khoản hoặc đăng nhập. Web sẽ gửi email xác nhận; bấm link trong email để hoàn tất, hoặc nhập mã nếu email có mã.</p>
     <form class="auth-form" data-auth-form>
       <label>
         <span>Email</span>
@@ -1972,8 +1973,8 @@ function openAuthModal() {
       </label>
       <div class="auth-actions">
         <button class="btn btn-primary" type="submit" data-auth-action="signin">Đăng nhập</button>
-        <button class="btn btn-secondary" type="submit" data-auth-action="signup">Tạo tài khoản + gửi link</button>
-        <button class="btn btn-secondary" type="submit" data-auth-action="otp">Gửi link/mã đăng nhập</button>
+        <button class="btn btn-secondary" type="submit" data-auth-action="signup">Tạo tài khoản</button>
+        <button class="btn btn-secondary" type="submit" data-auth-action="otp">Gửi email xác nhận</button>
       </div>
     </form>
   `;
