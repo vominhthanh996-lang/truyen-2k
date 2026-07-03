@@ -1218,25 +1218,29 @@ function storyCard(story) {
 }
 
 function renderHome() {
-  const lastStory = getStory(state.lastRead.storyId) || stories[0];
+  const featuredStory = getStory("phe-tho-ta-nhat-duoc-ca-the-gioi") || stories[0];
+  const featuredChapter = featuredStory.chapters[0];
+  const lastStory = getStory(state.lastRead.storyId) || featuredStory;
   const lastChapter = getChapter(lastStory.id, state.lastRead.chapterId) || lastStory.chapters[0];
-  state.lastRead = { storyId: lastStory.id, chapterId: lastChapter.id };
+  if (!state.lastRead.storyId || !getChapter(state.lastRead.storyId, state.lastRead.chapterId)) {
+    state.lastRead = { storyId: lastStory.id, chapterId: lastChapter.id };
+  }
   saveState();
 
   els.view.innerHTML = `
     <section class="hero">
-      <div class="hero-main image-hero" style="${coverStyle(lastStory.cover, "hero")}">
+      <div class="hero-main image-hero" style="${coverStyle(featuredStory.cover, "hero")}">
         <span class="eyebrow">Truyện phế thổ đang đăng</span>
-        <h1>Phế Thổ: Ta Nhặt Được Cả Thế Giới</h1>
-        <p>Thư viện đọc truyện tiếng Việt có dấu, tối ưu cho đọc dài, có phần nghe audio và lưu chương đang đọc. Hiện tại toàn bộ chương được mở miễn phí.</p>
+        <h1>${escapeHtml(featuredStory.title)}</h1>
+        <p>${escapeHtml(featuredStory.summary)}</p>
         <div class="hero-kpis">
-          <span>${lastStory.chapters.length} chương</span>
-          <span>${lastStory.reads.toLocaleString("vi-VN")} lượt đọc</span>
-          <span>${lastStory.rating}/5 đánh giá</span>
+          <span>${featuredStory.chapters.length} chương</span>
+          <span>${featuredStory.reads.toLocaleString("vi-VN")} lượt đọc</span>
+          <span>${featuredStory.rating}/5 đánh giá</span>
         </div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#/read/${lastStory.id}/${lastChapter.id}">Đọc tiếp</a>
-          <a class="btn btn-secondary" href="#/story/${lastStory.id}">Danh sách chương</a>
+          <a class="btn btn-primary" href="#/read/${featuredStory.id}/${featuredChapter.id}">Đọc ngay</a>
+          <a class="btn btn-secondary" href="#/story/${featuredStory.id}">Danh sách chương</a>
         </div>
       </div>
       <aside class="panel quick-panel">
@@ -1258,7 +1262,7 @@ function renderHome() {
     <div class="section-head">
       <div>
         <span class="eyebrow">Thư viện</span>
-        <h2>Truyện trong repo content</h2>
+        <h2>Truyện đang đăng</h2>
       </div>
       <a class="btn btn-secondary" href="#/library">Xem tất cả</a>
     </div>
