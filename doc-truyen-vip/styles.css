@@ -1351,7 +1351,7 @@ body {
 }
 
 .hero-main::after {
-  content: "PHẾ THỔ";
+  content: "TRUYỆN 2K";
   position: absolute;
   right: clamp(42px, 8vw, 116px);
   bottom: 78px;

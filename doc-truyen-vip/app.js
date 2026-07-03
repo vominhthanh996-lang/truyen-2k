@@ -1218,9 +1218,8 @@ function storyCard(story) {
 }
 
 function renderHome() {
-  const featuredStory = getStory("phe-tho-ta-nhat-duoc-ca-the-gioi") || stories[0];
-  const featuredChapter = featuredStory.chapters[0];
-  const lastStory = getStory(state.lastRead.storyId) || featuredStory;
+  const totalChapters = stories.reduce((sum, story) => sum + story.chapters.length, 0);
+  const lastStory = getStory(state.lastRead.storyId) || stories[0];
   const lastChapter = getChapter(lastStory.id, state.lastRead.chapterId) || lastStory.chapters[0];
   if (!state.lastRead.storyId || !getChapter(state.lastRead.storyId, state.lastRead.chapterId)) {
     state.lastRead = { storyId: lastStory.id, chapterId: lastChapter.id };
@@ -1229,18 +1228,18 @@ function renderHome() {
 
   els.view.innerHTML = `
     <section class="hero">
-      <div class="hero-main image-hero" style="${coverStyle(featuredStory.cover, "hero")}">
-        <span class="eyebrow">Truyện phế thổ đang đăng</span>
-        <h1>${escapeHtml(featuredStory.title)}</h1>
-        <p>${escapeHtml(featuredStory.summary)}</p>
+      <div class="hero-main">
+        <span class="eyebrow">Thư viện truyện tiếng Việt</span>
+        <h1>Truyện 2K</h1>
+        <p>Đọc và nghe truyện dài kỳ tiếng Việt có dấu, tối ưu cho đọc lâu, lưu chương đang đọc, bình luận chung và mở miễn phí trong giai đoạn đầu.</p>
         <div class="hero-kpis">
-          <span>${featuredStory.chapters.length} chương</span>
-          <span>${featuredStory.reads.toLocaleString("vi-VN")} lượt đọc</span>
-          <span>${featuredStory.rating}/5 đánh giá</span>
+          <span>${stories.length} truyện</span>
+          <span>${totalChapters.toLocaleString("vi-VN")} chương</span>
+          <span>Đọc miễn phí</span>
         </div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#/read/${featuredStory.id}/${featuredChapter.id}">Đọc ngay</a>
-          <a class="btn btn-secondary" href="#/story/${featuredStory.id}">Danh sách chương</a>
+          <a class="btn btn-primary" href="#/library">Vào thư viện</a>
+          <a class="btn btn-secondary" href="#/read/${lastStory.id}/${lastChapter.id}">Đọc tiếp</a>
         </div>
       </div>
       <aside class="panel quick-panel">
