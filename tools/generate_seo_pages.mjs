@@ -51,6 +51,20 @@ async function supabaseRpc(name, body = {}) {
   return response.json();
 }
 
+async function loadBundledStories() {
+  try {
+    const source = await fs.readFile(path.join(OUT_DIR, "extra-stories.js"), "utf8");
+    const stories = [];
+    const pattern = /window\.STORY_DATA\.stories\.push\(([\s\S]*?)\);\s*/g;
+    for (const match of source.matchAll(pattern)) {
+      stories.push(JSON.parse(match[1]));
+    }
+    return stories;
+  } catch {
+    return [];
+  }
+}
+
 function pageShell({ title, description, canonical, body, schema, stylesheet }) {
   return `<!doctype html>
 <html lang="vi">
@@ -101,7 +115,13 @@ async function removeOldSeoPages() {
 
 async function build() {
   const catalog = await supabaseRpc("get_story_catalog");
-  const stories = Array.isArray(catalog) ? catalog : (catalog.stories || []);
+  const remoteStories = Array.isArray(catalog) ? catalog : (catalog.stories || []);
+  const bundledStories = await loadBundledStories();
+  const remoteIds = new Set(remoteStories.map((story) => story.id));
+  const stories = [
+    ...remoteStories,
+    ...bundledStories.filter((story) => !remoteIds.has(story.id))
+  ];
   const sitemapUrls = [
     { loc: `${SITE_URL}/`, priority: "1.0", changefreq: "daily" }
   ];
@@ -159,11 +179,14 @@ async function build() {
     sitemapUrls.push({ loc: storyCanonical, priority: "0.9", changefreq: "daily" });
 
     for (const chapter of chapters) {
-      const chapterData = await supabaseRpc("get_chapter_for_reader", {
-        p_story_id: storyId,
-        p_chapter_id: chapter.id
-      });
-      const body = Array.isArray(chapterData.body) ? chapterData.body : [];
+      let body = Array.isArray(chapter.body) ? chapter.body : [];
+      if (!body.length) {
+        const chapterData = await supabaseRpc("get_chapter_for_reader", {
+          p_story_id: storyId,
+          p_chapter_id: chapter.id
+        });
+        body = Array.isArray(chapterData.body) ? chapterData.body : [];
+      }
       const excerpt = body.slice(0, EXCERPT_PARAGRAPHS);
       const canonical = chapterUrl(storyId, chapter.id);
       const description = metaDescription(`${chapter.title}. ${excerpt.join(" ") || story.summary || ""}`);

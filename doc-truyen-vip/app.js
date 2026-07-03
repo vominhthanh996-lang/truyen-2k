@@ -1,7 +1,8 @@
 const initialStoryData = window.STORY_DATA || { stories: [], plans: [] };
 let stories = initialStoryData.stories || [];
 const STORY_THUMBNAILS = {
-  "phe-tho-ta-nhat-duoc-ca-the-gioi": "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp"
+  "phe-tho-ta-nhat-duoc-ca-the-gioi": "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim": "assets/toi-tro-ve-30-ngay-thumb.png"
 };
 
 const els = {
@@ -462,7 +463,13 @@ async function loadStoryCatalog() {
   }
 
   const payload = data || {};
-  stories = (payload.stories || []).map(normalizeCatalogStory);
+  const remoteStories = (payload.stories || []).map(normalizeCatalogStory);
+  const bundledStories = (initialStoryData.stories || []).map(normalizeCatalogStory);
+  const remoteIds = new Set(remoteStories.map((story) => story.id));
+  stories = [
+    ...remoteStories,
+    ...bundledStories.filter((story) => !remoteIds.has(story.id))
+  ];
   hydrateLastReadFromCatalog();
   storyCatalogReady = true;
 }
@@ -1459,7 +1466,9 @@ async function renderReader(storyId, chapterId) {
   let readable = canRead(storyId, chapter);
   let readerChapter = chapter;
 
-  if (readable) {
+  if (readable && Array.isArray(chapter.body) && chapter.body.length) {
+    readerChapter = chapter;
+  } else if (readable) {
     try {
       const dbChapter = await loadChapterForReader(storyId, chapterId);
       readable = Boolean(dbChapter.can_read);
