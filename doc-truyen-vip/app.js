@@ -2,7 +2,7 @@ const initialStoryData = window.STORY_DATA || { stories: [], plans: [] };
 let stories = initialStoryData.stories || [];
 const STORY_THUMBNAILS = {
   "phe-tho-ta-nhat-duoc-ca-the-gioi": "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
-  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim": "assets/toi-tro-ve-30-ngay-thumb.png"
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim": "assets/toi-tro-ve-30-ngay-thumb.jpg"
 };
 
 const els = {

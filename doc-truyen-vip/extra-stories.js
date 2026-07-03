@@ -12,7 +12,7 @@ window.STORY_DATA.stories.push({
                   "Sinh tồn",
                   "Nữ cường"
               ],
-    "cover":  "assets/toi-tro-ve-30-ngay-thumb.png",
+    "cover":  "assets/toi-tro-ve-30-ngay-thumb.jpg",
     "summary":  "Lâm An chết trong căn hộ tầng mười bảy sau khi bị hàng xóm phá cửa cướp hết nước, thuốc và lương thực trong trận đại ngập. Mở mắt ra, cô trở về đúng ba mươi ngày trước thảm họa, âm thầm tích trữ và học cách sống sót giữa một thành phố sắp chìm.",
     "updatedAt":  "2026-07-03",
     "reads":  0,
