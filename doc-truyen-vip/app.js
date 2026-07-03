@@ -1221,6 +1221,7 @@ function renderHome() {
   const totalChapters = stories.reduce((sum, story) => sum + story.chapters.length, 0);
   const lastStory = getStory(state.lastRead.storyId) || stories[0];
   const lastChapter = getChapter(lastStory.id, state.lastRead.chapterId) || lastStory.chapters[0];
+  const lastChapterNumber = Number(String(lastChapter.id || "").replace(/\D/g, "")) || "";
   if (!state.lastRead.storyId || !getChapter(state.lastRead.storyId, state.lastRead.chapterId)) {
     state.lastRead = { storyId: lastStory.id, chapterId: lastChapter.id };
   }
@@ -1244,11 +1245,18 @@ function renderHome() {
       </div>
       <aside class="panel quick-panel">
         <span class="eyebrow">Đang đọc</span>
-        <h2>${lastChapter.title}</h2>
-        <p class="muted">${lastStory.title}</p>
+        <h2>${escapeHtml(lastStory.title)}</h2>
+        <div class="reading-detail">
+          <span>Tên truyện</span>
+          <strong>${escapeHtml(lastStory.title)}</strong>
+        </div>
+        <div class="reading-detail">
+          <span>Đang ở chương</span>
+          <strong>${lastChapterNumber ? `Chương ${lastChapterNumber}: ` : ""}${escapeHtml(lastChapter.title)}</strong>
+        </div>
         <a class="reading-strip" href="#/read/${lastStory.id}/${lastChapter.id}">
           <span>Tiếp tục đọc</span>
-          <strong>${lastChapter.title}</strong>
+          <strong>${escapeHtml(lastChapter.title)}</strong>
         </a>
         <div class="metrics-grid">
           <div class="metric"><span class="muted">Trạng thái</span><strong>Free</strong></div>

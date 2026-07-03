@@ -1433,6 +1433,25 @@ body {
   line-height: 1.12;
 }
 
+.reading-detail {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reading-detail span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.reading-detail strong {
+  color: var(--ink);
+  line-height: 1.35;
+}
+
 .reading-strip {
   display: grid;
   gap: 4px;
