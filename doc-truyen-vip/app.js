@@ -1626,7 +1626,7 @@ function renderIllustratedReaderContent(storyId, chapterId, body) {
           <p>${escapeHtml(pack.intro || "Ảnh được xếp theo thứ tự diễn biến chương.")}</p>
         </div>
         <div class="visual-mode-toggle" aria-label="Chọn cách hiển thị hình">
-          <button class="btn ${visualMode === "cinematic" ? "btn-primary" : "btn-secondary"}" data-visual-mode="cinematic">Nền phim</button>
+          <button class="btn ${visualMode === "cinematic" ? "btn-primary" : "btn-secondary"}" data-visual-mode="cinematic">Phim + chữ</button>
           <button class="btn ${visualMode === "stacked" ? "btn-primary" : "btn-secondary"}" data-visual-mode="stacked">Ảnh trước đoạn</button>
         </div>
       </div>
