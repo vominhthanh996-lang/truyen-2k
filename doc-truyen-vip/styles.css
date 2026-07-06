@@ -1898,7 +1898,8 @@ body.reader-dark {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  perspective: 1200px;
+  perspective: 1600px;
+  perspective-origin: 50% 38%;
 }
 
 .genre-card {
@@ -1914,9 +1915,10 @@ body.reader-dark {
   background: #0f172a;
   color: #fff;
   box-shadow: 0 22px 70px rgba(2, 6, 23, 0.30);
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform: translateZ(0) rotateX(var(--rx)) rotateY(var(--ry));
   transform-style: preserve-3d;
   transition: transform 260ms ease, opacity 260ms ease, filter 260ms ease, box-shadow 260ms ease;
+  will-change: transform, opacity, filter;
 }
 
 .genre-card-link {
@@ -1949,6 +1951,7 @@ body.reader-dark {
 }
 
 .genre-card:hover {
+  transform: translateY(-8px) translateZ(42px) rotateX(var(--rx)) rotateY(var(--ry));
   box-shadow: 0 30px 90px rgba(2, 6, 23, 0.42);
 }
 
@@ -1973,12 +1976,17 @@ body.reader-dark {
   border-radius: 999px;
   background: rgba(250, 204, 21, 0.24);
   filter: blur(22px);
+  animation: portalPulse 4.5s ease-in-out infinite;
 }
 
 .theme-xianxia .genre-light {
   left: 10%;
   right: auto;
   background: rgba(125, 211, 252, 0.28);
+}
+
+.theme-apocalypse .genre-light {
+  background: rgba(250, 204, 21, 0.32);
 }
 
 .genre-depth {
@@ -2043,6 +2051,21 @@ body.reader-dark {
   cursor: wait;
 }
 
+.portal-active::after {
+  content: "";
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 7%, rgba(20, 184, 166, 0.16) 8% 12%, transparent 13% 18%, rgba(15, 23, 42, 0.74) 50%),
+    radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.22), transparent 28%),
+    rgba(2, 6, 23, 0.28);
+  opacity: 0;
+  transform: scale(1.35);
+  animation: portalTunnel 1250ms cubic-bezier(0.18, 0.9, 0.22, 1) both;
+}
+
 .portal-active .genre-stage {
   pointer-events: none;
 }
@@ -2050,26 +2073,51 @@ body.reader-dark {
 .genre-card.is-muted {
   opacity: 0.22;
   filter: blur(2px) grayscale(0.8);
-  transform: scale(0.96);
+  transform: translateZ(-80px) scale(0.92);
 }
 
 .genre-card.entering {
   z-index: 5;
-  transform: rotateX(0deg) rotateY(0deg) scale(1.08);
+  animation: genreDive 1250ms cubic-bezier(0.16, 0.92, 0.18, 1) both;
   box-shadow: 0 40px 120px rgba(20, 184, 166, 0.34);
 }
 
 .genre-card.entering .genre-card-link::before {
-  transform: scale(1.22);
+  transform: scale(1.34);
+  filter: saturate(1.22) contrast(1.12);
 }
 
 .portal-xianxia .genre-card.entering {
   box-shadow: 0 40px 120px rgba(124, 58, 237, 0.34);
 }
 
+.portal-apocalypse .genre-card.entering {
+  box-shadow: 0 44px 130px rgba(245, 158, 11, 0.30);
+}
+
 .world-page {
   display: grid;
   gap: 26px;
+}
+
+.world-page.arriving .world-hero {
+  animation: worldHeroArrive 850ms cubic-bezier(0.17, 0.84, 0.21, 1) both;
+}
+
+.world-page.arriving .story-card {
+  animation: relatedStoryFlyIn 720ms cubic-bezier(0.18, 0.88, 0.24, 1) both;
+}
+
+.world-page.arriving .story-card:nth-child(1) {
+  animation-delay: 120ms;
+}
+
+.world-page.arriving .story-card:nth-child(2) {
+  animation-delay: 220ms;
+}
+
+.world-page.arriving .story-card:nth-child(3) {
+  animation-delay: 320ms;
 }
 
 .world-hero {
@@ -2177,5 +2225,79 @@ body.reader-dark {
   .genre-content,
   .genre-visual {
     transform: none !important;
+    animation: none !important;
+  }
+}
+
+@keyframes portalPulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes genreDive {
+  0% {
+    transform: translateZ(0) rotateX(var(--rx)) rotateY(var(--ry)) scale(1);
+    filter: saturate(1);
+  }
+
+  42% {
+    transform: translateZ(180px) rotateX(0deg) rotateY(0deg) scale(1.10);
+    filter: saturate(1.2) contrast(1.08);
+  }
+
+  100% {
+    transform: translateZ(680px) rotateX(0deg) rotateY(0deg) scale(1.58);
+    filter: saturate(1.3) contrast(1.14) blur(0.8px);
+  }
+}
+
+@keyframes portalTunnel {
+  0% {
+    opacity: 0;
+    transform: scale(1.35) rotate(0deg);
+  }
+
+  35% {
+    opacity: 0.82;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.56) rotate(8deg);
+  }
+}
+
+@keyframes worldHeroArrive {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(1.04);
+    filter: blur(4px) saturate(1.25);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) saturate(1);
+  }
+}
+
+@keyframes relatedStoryFlyIn {
+  0% {
+    opacity: 0;
+    transform: translateY(54px) translateZ(-120px) scale(0.92);
+    filter: blur(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateZ(0) scale(1);
+    filter: blur(0);
   }
 }

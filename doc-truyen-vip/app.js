@@ -6,13 +6,14 @@ const STORY_THUMBNAILS = {
 };
 const GENRES = [
   {
-    id: "phe-tho",
-    title: "Phế Thổ",
+    id: "tan-the",
+    aliases: ["phe-tho"],
+    title: "Tận Thế",
     eyebrow: "Sinh tồn hậu tận thế",
-    description: "Bụi xám, thành đổ, nước sạch hiếm hơn vàng. Những truyện nơi con người phải giữ mạng, giữ lòng, rồi giành lại cả thế giới.",
+    description: "Thành phố sụp đổ, nước sạch hiếm hơn vàng, mỗi bước đi đều có giá. Những truyện sinh tồn nơi nhân vật phải bò qua tro bụi để giành lại ngày mai.",
     cover: "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
-    tone: "Bụi xám · Sinh tồn · Đổ nát",
-    theme: "wasteland",
+    tone: "Tận thế · Sinh tồn · Đột biến",
+    theme: "apocalypse",
     storyIds: [
       "phe-tho-ta-nhat-duoc-ca-the-gioi",
       "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim"
@@ -98,6 +99,7 @@ let userVipUntil = null;
 let pendingEmailOtp = null;
 let isAdminUser = false;
 let genrePortalLocked = false;
+let arrivingGenreId = "";
 let adminState = {
   loading: false,
   error: "",
@@ -1244,7 +1246,7 @@ function storyCard(story) {
 }
 
 function getGenre(genreId) {
-  return GENRES.find((genre) => genre.id === genreId);
+  return GENRES.find((genre) => genre.id === genreId || (genre.aliases || []).includes(genreId));
 }
 
 function storiesForGenre(genre) {
@@ -1346,9 +1348,10 @@ function renderGenreWorld(genreId) {
   if (!genre) return renderNotFound();
   const genreStories = storiesForGenre(genre);
   const chapterCount = genreStories.reduce((sum, story) => sum + story.chapters.length, 0);
+  const arrivingClass = arrivingGenreId === genre.id ? " arriving" : "";
 
   els.view.innerHTML = `
-    <section class="world-page theme-${genre.theme}">
+    <section class="world-page theme-${genre.theme}${arrivingClass}">
       <div class="world-hero" style="--genre-cover:url('${genre.cover}')">
         <div>
           <a class="btn btn-secondary" href="#/">← Cổng thế giới</a>
@@ -1373,6 +1376,12 @@ function renderGenreWorld(genreId) {
       </section>
     </section>
   `;
+  if (arrivingGenreId === genre.id) {
+    setTimeout(() => {
+      document.querySelector(".world-page.arriving")?.classList.remove("arriving");
+      arrivingGenreId = "";
+    }, 1200);
+  }
 }
 
 function renderLibrary() {
@@ -2416,9 +2425,10 @@ function startGenrePortal(genreId, card) {
   });
 
   setTimeout(() => {
+    arrivingGenreId = genre.id;
     location.hash = `#/the-loai/${genre.id}`;
     genrePortalLocked = false;
-    document.body.classList.remove("portal-active", "portal-wasteland", "portal-xianxia");
+    document.body.classList.remove("portal-active", "portal-wasteland", "portal-apocalypse", "portal-xianxia");
     document.querySelectorAll("[data-genre-card]").forEach((item) => {
       item.classList.remove("entering", "is-muted");
     });
