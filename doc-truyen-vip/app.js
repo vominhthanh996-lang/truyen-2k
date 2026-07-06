@@ -4,6 +4,16 @@ const STORY_THUMBNAILS = {
   "phe-tho-ta-nhat-duoc-ca-the-gioi": "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
   "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim": "assets/toi-tro-ve-30-ngay-thumb.jpg"
 };
+const STORY_ART_PACKS = {
+  "phe-tho-ta-nhat-duoc-ca-the-gioi:c001": {
+    title: "Cảnh minh họa chương 1",
+    intro: "10 khung hình cinematic dựng mood tận thế cho chương này. Ảnh có chuyển động 3D nhẹ khi rê chuột hoặc cuộn trên điện thoại.",
+    images: Array.from({ length: 10 }, (_, index) => ({
+      src: `assets/story-art/phe-tho-ta-nhat-duoc-ca-the-gioi/c001/c001-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Cảnh tận thế chương 1 - khung ${index + 1}`
+    }))
+  }
+};
 const GENRES = [
   {
     id: "tan-the",
@@ -1554,6 +1564,31 @@ function renderAudioPanel(story, chapter, readable, prev, next) {
   `;
 }
 
+function renderChapterVisuals(storyId, chapterId) {
+  const pack = STORY_ART_PACKS[`${storyId}:${chapterId}`];
+  if (!pack?.images?.length) return "";
+  return `
+    <section class="chapter-visuals" aria-label="${escapeHtml(pack.title)}">
+      <div class="chapter-visuals-head">
+        <div>
+          <span class="eyebrow">Cảnh minh họa</span>
+          <h2>${escapeHtml(pack.title)}</h2>
+        </div>
+        <span class="status-chip">${pack.images.length} ảnh</span>
+      </div>
+      <p>${escapeHtml(pack.intro || "")}</p>
+      <div class="chapter-visual-grid">
+        ${pack.images.map((image, index) => `
+          <figure class="chapter-visual-card" data-visual-card style="--delay:${index * 90}ms">
+            <img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" decoding="async" />
+            <figcaption>Khung ${index + 1}</figcaption>
+          </figure>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 async function renderReader(storyId, chapterId) {
   const story = getStory(storyId);
   const chapter = getChapter(storyId, chapterId);
@@ -1602,7 +1637,7 @@ async function renderReader(storyId, chapterId) {
       </div>
       ${
         readable
-          ? `${renderAudioPanel(story, readerChapter, readable, prev, next)}<section class="reader-content">${readerChapter.body.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</section>`
+          ? `${renderAudioPanel(story, readerChapter, readable, prev, next)}${renderChapterVisuals(story.id, chapter.id)}<section class="reader-content">${readerChapter.body.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</section>`
           : paywallBlock(storyId, chapter)
       }
       ${renderChapterNav(story, prev, next, "reader-nav-bottom")}
@@ -2579,20 +2614,22 @@ document.addEventListener("click", async (event) => {
 
 document.addEventListener("pointermove", (event) => {
   const card = event.target.closest("[data-genre-card]");
-  if (!card || motionIsReduced() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-  const rect = card.getBoundingClientRect();
+  const visualCard = event.target.closest("[data-visual-card]");
+  const targetCard = card || visualCard;
+  if (!targetCard || motionIsReduced() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  const rect = targetCard.getBoundingClientRect();
   const x = (event.clientX - rect.left) / rect.width;
   const y = (event.clientY - rect.top) / rect.height;
-  const rotateY = (x - 0.5) * 10;
-  const rotateX = (0.5 - y) * 8;
-  card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
-  card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
-  card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
-  card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+  const rotateY = (x - 0.5) * (visualCard ? 14 : 10);
+  const rotateX = (0.5 - y) * (visualCard ? 10 : 8);
+  targetCard.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
+  targetCard.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
+  targetCard.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+  targetCard.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
 });
 
 document.addEventListener("pointerleave", (event) => {
-  const card = event.target.closest?.("[data-genre-card]");
+  const card = event.target.closest?.("[data-genre-card], [data-visual-card]");
   if (!card) return;
   card.style.removeProperty("--rx");
   card.style.removeProperty("--ry");

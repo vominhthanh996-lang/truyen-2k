@@ -1599,6 +1599,124 @@ body {
   color: #202938;
 }
 
+.chapter-visuals {
+  margin: 18px 0;
+  padding: clamp(16px, 3vw, 26px);
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 12% 0, rgba(245, 158, 11, 0.14), transparent 28%),
+    linear-gradient(135deg, #101827, #172033 50%, #2b1c1c);
+  color: #fff;
+  box-shadow: 0 22px 70px rgba(2, 6, 23, 0.20);
+}
+
+.chapter-visuals-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.chapter-visuals h2 {
+  margin: 6px 0 0;
+  color: #fff;
+  font-family: var(--font-vietnamese);
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.05;
+}
+
+.chapter-visuals > p {
+  max-width: 780px;
+  margin: 0 0 18px;
+  color: rgba(248, 250, 252, 0.72);
+  line-height: 1.62;
+}
+
+.chapter-visuals .status-chip {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.chapter-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  perspective: 1400px;
+  perspective-origin: 50% 34%;
+}
+
+.chapter-visual-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 8px;
+  background: #070b12;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  transform: translateZ(0) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  animation: visualFloat 5.8s ease-in-out infinite;
+  animation-delay: var(--delay);
+  transition: transform 260ms ease, box-shadow 260ms ease, filter 260ms ease;
+  will-change: transform;
+}
+
+.chapter-visual-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.30), transparent 18%),
+    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.48));
+  opacity: 0.72;
+  mix-blend-mode: screen;
+}
+
+.chapter-visual-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  transform: scale(1.06) translateZ(34px);
+  transition: transform 520ms ease, filter 520ms ease;
+}
+
+.chapter-visual-card:hover {
+  z-index: 2;
+  box-shadow: 0 30px 80px rgba(245, 158, 11, 0.22);
+  animation-play-state: paused;
+}
+
+.chapter-visual-card:hover img {
+  transform: scale(1.13) translateZ(60px);
+  filter: saturate(1.08) contrast(1.06);
+}
+
+.chapter-visual-card figcaption {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 1;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.54);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 850;
+  backdrop-filter: blur(10px);
+}
+
 .payment-card,
 .comments-panel,
 .paywall,
@@ -1684,7 +1802,8 @@ body.reader-dark {
 
   .story-grid,
   .plans-grid,
-  .metrics-grid {
+  .metrics-grid,
+  .chapter-visual-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -1706,6 +1825,7 @@ body.reader-dark {
   .story-grid,
   .plans-grid,
   .metrics-grid,
+  .chapter-visual-grid,
   .chapter-tools {
     grid-template-columns: 1fr;
   }
@@ -1758,6 +1878,11 @@ body.reader-dark {
 
   .reader-content {
     padding: 20px 16px;
+  }
+
+  .chapter-visuals-head {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
 
@@ -2214,6 +2339,7 @@ body.reader-dark {
 
 @media (prefers-reduced-motion: reduce) {
   .genre-card,
+  .chapter-visual-card,
   .genre-card-link::before,
   .btn,
   .icon-btn,
@@ -2223,9 +2349,21 @@ body.reader-dark {
 
   .genre-card,
   .genre-content,
-  .genre-visual {
+  .genre-visual,
+  .chapter-visual-card,
+  .chapter-visual-card img {
     transform: none !important;
     animation: none !important;
+  }
+}
+
+@keyframes visualFloat {
+  0%, 100% {
+    transform: translateY(0) translateZ(0) rotateX(var(--rx)) rotateY(var(--ry));
+  }
+
+  50% {
+    transform: translateY(-8px) translateZ(28px) rotateX(calc(var(--rx) + 1deg)) rotateY(calc(var(--ry) - 1deg));
   }
 }
 
