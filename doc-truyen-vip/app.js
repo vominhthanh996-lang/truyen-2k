@@ -147,6 +147,7 @@ function loadState() {
     darkReader: false,
     audioVoice: "nu-cam-xuc",
     audioSpeed: 1,
+    visualMode: "cinematic",
     commenterName: "",
     lastRead: defaultLastRead(),
     chapterFilters: {},
@@ -1597,6 +1598,7 @@ function renderIllustratedReaderContent(storyId, chapterId, body) {
   const pack = STORY_ART_PACKS[`${storyId}:${chapterId}`];
   if (!pack?.images?.length || !Array.isArray(body) || !body.length) return renderReaderText(body || []);
 
+  const visualMode = ["cinematic", "stacked"].includes(state.visualMode) ? state.visualMode : "cinematic";
   const chunkSize = Math.max(1, Math.ceil(body.length / pack.images.length));
   const scenes = pack.images.map((image, index) => {
     const start = index * chunkSize;
@@ -1616,11 +1618,17 @@ function renderIllustratedReaderContent(storyId, chapterId, body) {
   }).join("");
 
   return `
-    <section class="illustrated-reader" aria-label="${escapeHtml(pack.title)}">
+    <section class="illustrated-reader visual-mode-${visualMode}" aria-label="${escapeHtml(pack.title)}">
       <div class="illustrated-reader-head">
-        <span class="eyebrow">Đọc kèm hình</span>
-        <h2>${escapeHtml(pack.title)}</h2>
-        <p>${escapeHtml(pack.intro || "Ảnh được xếp theo thứ tự diễn biến chương.")}</p>
+        <div>
+          <span class="eyebrow">Đọc kèm hình</span>
+          <h2>${escapeHtml(pack.title)}</h2>
+          <p>${escapeHtml(pack.intro || "Ảnh được xếp theo thứ tự diễn biến chương.")}</p>
+        </div>
+        <div class="visual-mode-toggle" aria-label="Chọn cách hiển thị hình">
+          <button class="btn ${visualMode === "cinematic" ? "btn-primary" : "btn-secondary"}" data-visual-mode="cinematic">Nền phim</button>
+          <button class="btn ${visualMode === "stacked" ? "btn-primary" : "btn-secondary"}" data-visual-mode="stacked">Ảnh trước đoạn</button>
+        </div>
       </div>
       ${scenes}
     </section>
@@ -2637,6 +2645,13 @@ document.addEventListener("click", async (event) => {
 
   if (event.target.id === "toggleReaderTheme") {
     state.darkReader = !state.darkReader;
+    saveState();
+    route();
+  }
+
+  const visualModeButton = event.target.closest("[data-visual-mode]");
+  if (visualModeButton) {
+    state.visualMode = visualModeButton.dataset.visualMode;
     saveState();
     route();
   }

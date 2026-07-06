@@ -1724,6 +1724,10 @@ body {
 }
 
 .illustrated-reader-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
   padding: clamp(18px, 3vw, 28px);
   overflow: hidden;
   border: 1px solid rgba(15, 23, 42, 0.10);
@@ -1748,6 +1752,14 @@ body {
   margin: 0;
   color: rgba(248, 250, 252, 0.76);
   line-height: 1.62;
+}
+
+.visual-mode-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  min-width: fit-content;
 }
 
 .illustrated-scene {
@@ -1871,6 +1883,30 @@ body {
 
 .scene-copy p:last-child {
   margin-bottom: 0;
+}
+
+.visual-mode-stacked .illustrated-scene {
+  grid-template-columns: 1fr;
+  min-height: auto;
+  background:
+    linear-gradient(180deg, rgba(8, 13, 24, 0.90), rgba(8, 13, 24, 0.55), rgba(255, 252, 244, 0.97)),
+    var(--scene-image) center / cover;
+}
+
+.visual-mode-stacked .scene-media {
+  position: relative;
+  top: auto;
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.visual-mode-stacked .scene-media img {
+  aspect-ratio: 16 / 9;
+}
+
+.visual-mode-stacked .scene-copy {
+  width: min(760px, 100%);
+  margin: 0 auto;
 }
 
 .payment-card,
@@ -2058,6 +2094,19 @@ body.reader-dark {
   .illustrated-scene,
   .scene-copy {
     padding: 16px;
+  }
+
+  .illustrated-reader-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .visual-mode-toggle {
+    justify-content: stretch;
+  }
+
+  .visual-mode-toggle .btn {
+    flex: 1 1 140px;
   }
 
   .illustrated-scene {
