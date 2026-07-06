@@ -4,6 +4,31 @@ const STORY_THUMBNAILS = {
   "phe-tho-ta-nhat-duoc-ca-the-gioi": "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
   "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim": "assets/toi-tro-ve-30-ngay-thumb.jpg"
 };
+const GENRES = [
+  {
+    id: "phe-tho",
+    title: "Phế Thổ",
+    eyebrow: "Sinh tồn hậu tận thế",
+    description: "Bụi xám, thành đổ, nước sạch hiếm hơn vàng. Những truyện nơi con người phải giữ mạng, giữ lòng, rồi giành lại cả thế giới.",
+    cover: "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
+    tone: "Bụi xám · Sinh tồn · Đổ nát",
+    theme: "wasteland",
+    storyIds: [
+      "phe-tho-ta-nhat-duoc-ca-the-gioi",
+      "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim"
+    ]
+  },
+  {
+    id: "tu-tien",
+    title: "Tu Tiên",
+    eyebrow: "Mây trời kiếm khí",
+    description: "Tông môn, bí cảnh, linh căn và những trận chiến đổi mệnh. Cổng này đã sẵn để đưa truyện tu tiên mới lên khi mày có content.",
+    cover: "assets/truyen-2k-og.jpg",
+    tone: "Tiên sơn · Kiếm khí · Pháp trận",
+    theme: "xianxia",
+    storyIds: []
+  }
+];
 
 const els = {
   view: document.querySelector("#view"),
@@ -72,6 +97,7 @@ let authUser = null;
 let userVipUntil = null;
 let pendingEmailOtp = null;
 let isAdminUser = false;
+let genrePortalLocked = false;
 let adminState = {
   loading: false,
   error: "",
@@ -1217,77 +1243,134 @@ function storyCard(story) {
   `;
 }
 
+function getGenre(genreId) {
+  return GENRES.find((genre) => genre.id === genreId);
+}
+
+function storiesForGenre(genre) {
+  if (!genre) return [];
+  return (genre.storyIds || []).map((storyId) => getStory(storyId)).filter(Boolean);
+}
+
+function genreCard(genre) {
+  const genreStories = storiesForGenre(genre);
+  const chapterCount = genreStories.reduce((sum, story) => sum + story.chapters.length, 0);
+  return `
+    <article class="genre-card theme-${genre.theme}" data-genre-card="${genre.id}" style="--genre-cover:url('${genre.cover}')">
+      <a class="genre-card-link" href="#/the-loai/${genre.id}" data-enter-genre="${genre.id}" aria-label="Bước vào thể loại ${genre.title}">
+        <span class="genre-visual" aria-hidden="true">
+          <span class="genre-light"></span>
+          <span class="genre-depth"></span>
+        </span>
+        <span class="genre-content">
+          <span class="eyebrow">${genre.eyebrow}</span>
+          <strong>${genre.title}</strong>
+          <span>${genre.description}</span>
+          <span class="genre-tone">${genre.tone}</span>
+          <span class="genre-meta">${genreStories.length || "Sắp có"} truyện · ${chapterCount.toLocaleString("vi-VN")} chương</span>
+          <span class="btn btn-primary genre-enter">Bước vào thế giới</span>
+        </span>
+      </a>
+    </article>
+  `;
+}
+
+function readingChapterLabel(chapter, chapterNumber) {
+  const title = chapter?.title || "";
+  if (!chapterNumber || /^chương\s*\d+/i.test(title)) return title;
+  return `Chương ${chapterNumber}: ${title}`;
+}
+
 function renderHome() {
   const totalChapters = stories.reduce((sum, story) => sum + story.chapters.length, 0);
   const lastStory = getStory(state.lastRead.storyId) || stories[0];
   const lastChapter = getChapter(lastStory.id, state.lastRead.chapterId) || lastStory.chapters[0];
   const lastChapterNumber = Number(String(lastChapter.id || "").replace(/\D/g, "")) || "";
+  const lastChapterLabel = readingChapterLabel(lastChapter, lastChapterNumber);
   if (!state.lastRead.storyId || !getChapter(state.lastRead.storyId, state.lastRead.chapterId)) {
     state.lastRead = { storyId: lastStory.id, chapterId: lastChapter.id };
   }
   saveState();
 
   els.view.innerHTML = `
-    <section class="hero">
-      <div class="hero-main">
-        <span class="eyebrow">Thư viện truyện tiếng Việt</span>
+    <section class="cinematic-home">
+      <div class="cinematic-copy">
+        <span class="eyebrow">Truyện 2K</span>
         <h1>Truyện 2K</h1>
-        <p>Đọc và nghe truyện dài kỳ tiếng Việt có dấu, tối ưu cho đọc lâu, lưu chương đang đọc, bình luận chung và mở miễn phí trong giai đoạn đầu.</p>
+        <p>Chọn một thế giới để bước vào. Đọc và nghe truyện dài kỳ tiếng Việt có dấu, lưu chương đang đọc và bình luận chung.</p>
         <div class="hero-kpis">
           <span>${stories.length} truyện</span>
           <span>${totalChapters.toLocaleString("vi-VN")} chương</span>
           <span>Đọc miễn phí</span>
         </div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#/library">Vào thư viện</a>
-          <a class="btn btn-secondary" href="#/read/${lastStory.id}/${lastChapter.id}">Đọc tiếp</a>
+          <a class="btn btn-primary" href="#/read/${lastStory.id}/${lastChapter.id}">Đọc tiếp</a>
+          <a class="btn btn-secondary" href="#/library">Thư viện</a>
         </div>
       </div>
-      <aside class="panel quick-panel">
+      <aside class="quick-read glass-panel">
         <span class="eyebrow">Đang đọc</span>
         <h2>${escapeHtml(lastStory.title)}</h2>
-        <div class="reading-detail">
-          <span>Tên truyện</span>
-          <strong>${escapeHtml(lastStory.title)}</strong>
-        </div>
-        <div class="reading-detail">
-          <span>Đang ở chương</span>
-          <strong>${lastChapterNumber ? `Chương ${lastChapterNumber}: ` : ""}${escapeHtml(lastChapter.title)}</strong>
-        </div>
+        <p>${escapeHtml(lastChapterLabel)}</p>
         <a class="reading-strip" href="#/read/${lastStory.id}/${lastChapter.id}">
           <span>Tiếp tục đọc</span>
-          <strong>${escapeHtml(lastChapter.title)}</strong>
+          <strong>${escapeHtml(lastChapterLabel)}</strong>
         </a>
-        <div class="metrics-grid">
-          <div class="metric"><span class="muted">Trạng thái</span><strong>Free</strong></div>
-          <div class="metric"><span class="muted">Audio</span><strong>2 giọng</strong></div>
-          <div class="metric"><span class="muted">Bình luận</span><strong>Có</strong></div>
-        </div>
       </aside>
     </section>
 
     <div class="section-head">
       <div>
-        <span class="eyebrow">Thư viện</span>
-        <h2>Truyện đang đăng</h2>
+        <span class="eyebrow">Thể loại</span>
+        <h2>Cổng thế giới</h2>
+      </div>
+      <a class="btn btn-secondary" href="#/library">Xem tất cả</a>
+    </div>
+    <section class="genre-stage" aria-label="Chọn thể loại truyện">
+      ${GENRES.map(genreCard).join("")}
+    </section>
+
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Truyện mới</span>
+        <h2>Đang đăng</h2>
       </div>
       <a class="btn btn-secondary" href="#/library">Xem tất cả</a>
     </div>
     <section class="story-grid">${stories.map(storyCard).join("")}</section>
+  `;
+}
 
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">Trạng thái đọc</span>
-        <h2>Đọc miễn phí</h2>
+function renderGenreWorld(genreId) {
+  const genre = getGenre(genreId);
+  if (!genre) return renderNotFound();
+  const genreStories = storiesForGenre(genre);
+  const chapterCount = genreStories.reduce((sum, story) => sum + story.chapters.length, 0);
+
+  els.view.innerHTML = `
+    <section class="world-page theme-${genre.theme}">
+      <div class="world-hero" style="--genre-cover:url('${genre.cover}')">
+        <div>
+          <a class="btn btn-secondary" href="#/">← Cổng thế giới</a>
+          <span class="eyebrow">${genre.eyebrow}</span>
+          <h1>${genre.title}</h1>
+          <p>${genre.description}</p>
+          <div class="hero-kpis">
+            <span>${genreStories.length || "Sắp có"} truyện</span>
+            <span>${chapterCount.toLocaleString("vi-VN")} chương</span>
+            <span>${genre.tone}</span>
+          </div>
+        </div>
       </div>
-    </div>
-    <section class="plans-grid">
-      <article class="payment-card">
-        <span class="eyebrow">Truyện 2K</span>
-        <h3>Đọc tự do</h3>
-        <p>Thanh toán tạm thời đã tắt. Người đọc có thể vào từng chương để đọc và nghe audio ngay.</p>
-        <a class="btn btn-primary" href="#/library">Vào thư viện</a>
-      </article>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Danh sách truyện</span>
+          <h2>${genre.title}</h2>
+        </div>
+      </div>
+      <section class="story-grid">
+        ${genreStories.map(storyCard).join("") || emptyState("Cổng này đã sẵn, chưa có truyện để đăng. Khi mày upload truyện Tu Tiên, chỉ cần gắn vào thể loại là hiện ở đây.")}
+      </section>
     </section>
   `;
 }
@@ -2313,6 +2396,35 @@ function renderCatalogGate() {
   return true;
 }
 
+function motionIsReduced() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function startGenrePortal(genreId, card) {
+  const genre = getGenre(genreId);
+  if (!genre || genrePortalLocked) return;
+  if (motionIsReduced()) {
+    location.hash = `#/the-loai/${genre.id}`;
+    return;
+  }
+
+  genrePortalLocked = true;
+  document.body.classList.add("portal-active", `portal-${genre.theme}`);
+  document.querySelectorAll("[data-genre-card]").forEach((item) => {
+    item.classList.toggle("entering", item === card);
+    item.classList.toggle("is-muted", item !== card);
+  });
+
+  setTimeout(() => {
+    location.hash = `#/the-loai/${genre.id}`;
+    genrePortalLocked = false;
+    document.body.classList.remove("portal-active", "portal-wasteland", "portal-xianxia");
+    document.querySelectorAll("[data-genre-card]").forEach((item) => {
+      item.classList.remove("entering", "is-muted");
+    });
+  }, 1250);
+}
+
 function toast(message) {
   const item = document.createElement("div");
   item.className = "toast";
@@ -2332,11 +2444,14 @@ async function route() {
   activeRouteHash = hash;
   const [_, routeName, id, chapterId] = hash.split("/");
   document.body.classList.toggle("reader-dark", state.darkReader && routeName === "read");
+  document.body.classList.toggle("cinematic-route", hash === "/" || routeName === "the-loai");
+  document.body.dataset.genreTheme = routeName === "the-loai" && id ? id : "";
   setActiveNav(hash);
 
   if (!renderCatalogGate()) return;
 
   if (hash === "/") renderHome();
+  else if (routeName === "the-loai") renderGenreWorld(id);
   else if (routeName === "library") renderLibrary();
   else if (routeName === "story") renderStory(id);
   else if (routeName === "read") await renderReader(id, chapterId);
@@ -2350,6 +2465,13 @@ async function route() {
 }
 
 document.addEventListener("click", async (event) => {
+  const genreLink = event.target.closest("[data-enter-genre]");
+  if (genreLink) {
+    event.preventDefault();
+    startGenrePortal(genreLink.dataset.enterGenre, genreLink.closest("[data-genre-card]"));
+    return;
+  }
+
   if (event.target.closest("[data-open-auth]")) {
     openAuthModal();
   }
@@ -2444,6 +2566,29 @@ document.addEventListener("click", async (event) => {
   }
 
 });
+
+document.addEventListener("pointermove", (event) => {
+  const card = event.target.closest("[data-genre-card]");
+  if (!card || motionIsReduced() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  const rect = card.getBoundingClientRect();
+  const x = (event.clientX - rect.left) / rect.width;
+  const y = (event.clientY - rect.top) / rect.height;
+  const rotateY = (x - 0.5) * 10;
+  const rotateX = (0.5 - y) * 8;
+  card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
+  card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
+  card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+  card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+});
+
+document.addEventListener("pointerleave", (event) => {
+  const card = event.target.closest?.("[data-genre-card]");
+  if (!card) return;
+  card.style.removeProperty("--rx");
+  card.style.removeProperty("--ry");
+  card.style.removeProperty("--mx");
+  card.style.removeProperty("--my");
+}, true);
 
 document.addEventListener("submit", async (event) => {
   const otpForm = event.target.closest("[data-otp-form]");
