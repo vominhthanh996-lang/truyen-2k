@@ -1589,6 +1589,44 @@ function renderChapterVisuals(storyId, chapterId) {
   `;
 }
 
+function renderReaderText(body) {
+  return `<section class="reader-content">${body.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</section>`;
+}
+
+function renderIllustratedReaderContent(storyId, chapterId, body) {
+  const pack = STORY_ART_PACKS[`${storyId}:${chapterId}`];
+  if (!pack?.images?.length || !Array.isArray(body) || !body.length) return renderReaderText(body || []);
+
+  const chunkSize = Math.max(1, Math.ceil(body.length / pack.images.length));
+  const scenes = pack.images.map((image, index) => {
+    const start = index * chunkSize;
+    const chunk = body.slice(start, start + chunkSize);
+    if (!chunk.length) return "";
+    return `
+      <section class="illustrated-scene" style="--scene-image:url('${escapeHtml(image.src)}'); --delay:${index * 80}ms">
+        <figure class="scene-media" data-visual-card>
+          <img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" decoding="async" />
+          <figcaption>Khung ${index + 1}</figcaption>
+        </figure>
+        <div class="scene-copy">
+          ${chunk.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+
+  return `
+    <section class="illustrated-reader" aria-label="${escapeHtml(pack.title)}">
+      <div class="illustrated-reader-head">
+        <span class="eyebrow">Đọc kèm hình</span>
+        <h2>${escapeHtml(pack.title)}</h2>
+        <p>${escapeHtml(pack.intro || "Ảnh được xếp theo thứ tự diễn biến chương.")}</p>
+      </div>
+      ${scenes}
+    </section>
+  `;
+}
+
 async function renderReader(storyId, chapterId) {
   const story = getStory(storyId);
   const chapter = getChapter(storyId, chapterId);
@@ -1637,7 +1675,7 @@ async function renderReader(storyId, chapterId) {
       </div>
       ${
         readable
-          ? `${renderAudioPanel(story, readerChapter, readable, prev, next)}${renderChapterVisuals(story.id, chapter.id)}<section class="reader-content">${readerChapter.body.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</section>`
+          ? `${renderAudioPanel(story, readerChapter, readable, prev, next)}${renderIllustratedReaderContent(story.id, chapter.id, readerChapter.body)}`
           : paywallBlock(storyId, chapter)
       }
       ${renderChapterNav(story, prev, next, "reader-nav-bottom")}
@@ -2467,7 +2505,7 @@ function startGenrePortal(genreId, card) {
     document.querySelectorAll("[data-genre-card]").forEach((item) => {
       item.classList.remove("entering", "is-muted");
     });
-  }, 1250);
+  }, 1680);
 }
 
 function toast(message) {
