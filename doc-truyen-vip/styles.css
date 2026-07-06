@@ -1577,6 +1577,17 @@ body {
   transform: translateX(2px);
 }
 
+.audio-panel-unsupported {
+  border-style: dashed;
+  background:
+    linear-gradient(180deg, #ffffff, #fbfcfd),
+    radial-gradient(circle at 100% 0, rgba(245, 158, 11, 0.12), transparent 28%);
+}
+
+.audio-panel-unsupported h2 {
+  color: #92400e;
+}
+
 .reader {
   max-width: 900px;
 }

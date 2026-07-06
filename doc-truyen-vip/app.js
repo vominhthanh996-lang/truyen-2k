@@ -72,6 +72,7 @@ const audioVoicePresets = [
 ];
 const audioSpeedOptions = [0.75, 0.9, 1, 1.15, 1.3, 1.5];
 const preferGeneratedMp3 = true;
+const audioManifestStoryId = "phe-tho-ta-nhat-duoc-ca-the-gioi";
 const EMAIL_OTP_EXPIRES_IN_MS = 20 * 60 * 1000;
 let state = loadState();
 let activeRouteHash = "";
@@ -566,9 +567,9 @@ function audioKey(storyId, chapterId) {
   return `${storyId}:${chapterId}`;
 }
 
-function chapterAudioUrl(chapter, voiceId = selectedAudioVoice()) {
+function chapterAudioUrl(storyId, chapter, voiceId = selectedAudioVoice()) {
   if (!preferGeneratedMp3) return "";
-  const manifestUrl = audioManifestUrls.get(`${chapter.id}:${voiceId}`);
+  const manifestUrl = audioManifestUrls.get(`${storyId}:${chapter.id}:${voiceId}`);
   if (manifestUrl) return manifestUrl;
   if (audioManifestLoaded) return "";
   const urls = chapter.audioUrls || {};
@@ -583,7 +584,8 @@ async function loadAudioManifest() {
     const payload = await response.json();
     (payload.files || []).forEach((item) => {
       if (!item.verified || item.provider !== "edge" || !item.chapterId || !item.preset || !item.file) return;
-      audioManifestUrls.set(`${item.chapterId}:${item.preset}`, `audio/${item.file}`);
+      const storyId = item.storyId || audioManifestStoryId;
+      audioManifestUrls.set(`${storyId}:${item.chapterId}:${item.preset}`, `audio/${item.file}`);
     });
     audioManifestLoaded = true;
   } catch {
@@ -1507,8 +1509,20 @@ function renderAudioPanel(story, chapter, readable, prev, next) {
   if (!readable) return "";
   const voiceId = selectedAudioVoice();
   const speed = selectedAudioSpeed();
-  const audioUrl = chapterAudioUrl(chapter, voiceId);
+  const audioUrl = chapterAudioUrl(story.id, chapter, voiceId);
   const voiceLabel = audioVoicePresets.find((voice) => voice.id === voiceId)?.label || "Hoài My - nữ Việt";
+  if (!audioUrl) {
+    return `
+      <section class="audio-panel audio-panel-unsupported" data-audio-panel="${story.id}:${chapter.id}">
+        <div>
+          <span class="eyebrow">Nghe truyện</span>
+          <h2>Chưa hỗ trợ audio</h2>
+          <p class="muted">Chương này chưa có file MP3 được gen riêng cho truyện <strong>${escapeHtml(story.title)}</strong>. Khi nào gen audio xong, player nghe và thanh tua mới hiện ở đây.</p>
+        </div>
+        ${renderChapterNav(story, prev, next, "audio-chapter-nav")}
+      </section>
+    `;
+  }
   const nativePlayer = audioUrl
     ? `<audio controls preload="metadata" src="${escapeHtml(audioUrl)}" data-generated-audio></audio>`
     : "";
