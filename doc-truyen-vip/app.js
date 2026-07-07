@@ -12,6 +12,14 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/phe-tho-ta-nhat-duoc-ca-the-gioi/c001/c001-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Cảnh tận thế chương 1 - khung ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c001": {
+    title: "Cảnh minh họa chương 1",
+    intro: "18 khung hình đi theo mạch chết trong đại ngập, trọng sinh về ba mươi ngày trước thảm họa, rồi bắt đầu tích trữ nước.",
+    images: Array.from({ length: 18 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c001/c001-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 1 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [
@@ -1613,10 +1621,10 @@ function renderIllustratedReaderContent(storyId, chapterId, body) {
   if (!pack?.images?.length || !Array.isArray(body) || !body.length) return renderReaderText(body || []);
 
   const visualMode = ["cinematic", "stacked"].includes(state.visualMode) ? state.visualMode : "cinematic";
-  const chunkSize = Math.max(1, Math.ceil(body.length / pack.images.length));
   const scenes = pack.images.map((image, index) => {
-    const start = index * chunkSize;
-    const chunk = body.slice(start, start + chunkSize);
+    const start = Math.floor((index * body.length) / pack.images.length);
+    const end = Math.floor(((index + 1) * body.length) / pack.images.length);
+    const chunk = body.slice(start, Math.max(end, start + 1));
     if (!chunk.length) return "";
     return `
       <section class="illustrated-scene" style="--scene-image:url('${escapeHtml(image.src)}'); --delay:${index * 80}ms">
