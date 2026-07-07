@@ -587,7 +587,7 @@ function chapterAudioUrl(storyId, chapter, voiceId = selectedAudioVoice()) {
 async function loadAudioManifest() {
   if (!preferGeneratedMp3) return;
   try {
-    const response = await fetch(`audio/verified-audio.json?v=20260630-audio-manifest`, { cache: "no-store" });
+    const response = await fetch(`audio/verified-audio.json?v=20260707-city-c001-audio-1`, { cache: "no-store" });
     if (!response.ok) throw new Error(`audio manifest ${response.status}`);
     const payload = await response.json();
     (payload.files || []).forEach((item) => {
