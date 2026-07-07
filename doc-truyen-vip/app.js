@@ -2504,6 +2504,35 @@ function motionIsReduced() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+function clearGenrePortalOverlay() {
+  document.querySelectorAll("[data-portal-overlay]").forEach((overlay) => overlay.remove());
+  document.body.classList.remove("portal-active", "portal-wasteland", "portal-apocalypse", "portal-xianxia");
+  document.querySelectorAll("[data-genre-card]").forEach((item) => {
+    item.classList.remove("entering", "is-muted");
+  });
+}
+
+function buildGenrePortalOverlay(genre) {
+  const overlay = document.createElement("div");
+  overlay.className = `portal-overlay portal-overlay-${genre.theme}`;
+  overlay.setAttribute("data-portal-overlay", genre.id);
+  overlay.setAttribute("aria-hidden", "true");
+
+  const rings = Array.from({ length: 11 }, (_, index) => `<span class="portal-ring" style="--i:${index}"></span>`).join("");
+  const streaks = Array.from({ length: 24 }, (_, index) => (
+    `<span class="portal-streak" style="--i:${index};--lane:${index % 6};--depth:${index % 8}"></span>`
+  )).join("");
+  overlay.innerHTML = `
+    <div class="portal-vortex">
+      <span class="portal-horizon"></span>
+      ${rings}
+      ${streaks}
+      <span class="portal-core"></span>
+    </div>
+  `;
+  return overlay;
+}
+
 function startGenrePortal(genreId, card) {
   const genre = getGenre(genreId);
   if (!genre || genrePortalLocked) return;
@@ -2513,6 +2542,8 @@ function startGenrePortal(genreId, card) {
   }
 
   genrePortalLocked = true;
+  clearGenrePortalOverlay();
+  document.body.append(buildGenrePortalOverlay(genre));
   document.body.classList.add("portal-active", `portal-${genre.theme}`);
   document.querySelectorAll("[data-genre-card]").forEach((item) => {
     item.classList.toggle("entering", item === card);
@@ -2523,11 +2554,8 @@ function startGenrePortal(genreId, card) {
     arrivingGenreId = genre.id;
     location.hash = `#/the-loai/${genre.id}`;
     genrePortalLocked = false;
-    document.body.classList.remove("portal-active", "portal-wasteland", "portal-apocalypse", "portal-xianxia");
-    document.querySelectorAll("[data-genre-card]").forEach((item) => {
-      item.classList.remove("entering", "is-muted");
-    });
-  }, 1680);
+    setTimeout(clearGenrePortalOverlay, 120);
+  }, 1780);
 }
 
 function toast(message) {

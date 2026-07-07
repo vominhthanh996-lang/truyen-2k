@@ -2476,36 +2476,138 @@ body.reader-dark {
 
 .portal-active {
   cursor: wait;
+  overflow: hidden;
+}
+
+.portal-active .app-shell,
+.portal-active .main,
+.portal-active .view {
+  overflow: hidden;
 }
 
 .portal-active::before,
 .portal-active::after {
-  content: "";
+  content: none;
+}
+
+.portal-overlay {
+  --portal-a: rgba(20, 184, 166, 0.92);
+  --portal-b: rgba(250, 204, 21, 0.78);
+  --portal-c: rgba(14, 165, 233, 0.56);
   position: fixed;
   inset: 0;
+  z-index: 94;
+  overflow: hidden;
   pointer-events: none;
+  perspective: 980px;
+  perspective-origin: 50% 48%;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.24), transparent 0 8%, rgba(2, 6, 23, 0.18) 26%, rgba(2, 6, 23, 0.88) 74%),
+    radial-gradient(circle at 50% 50%, var(--portal-a), transparent 34%),
+    rgba(2, 6, 23, 0.48);
+  opacity: 0;
+  animation: portalOverlayFade 1780ms cubic-bezier(0.14, 0.82, 0.15, 1) both;
 }
 
-.portal-active::before {
-  z-index: 91;
-  background:
-    repeating-radial-gradient(circle at 50% 50%, transparent 0 42px, rgba(153, 246, 228, 0.18) 48px, transparent 58px),
-    conic-gradient(from 0deg at 50% 50%, rgba(20,184,166,0), rgba(20,184,166,0.30), rgba(245,158,11,0.22), rgba(20,184,166,0));
-  opacity: 0;
-  transform: scale(1.4) rotate(0deg);
-  filter: blur(0.2px);
-  animation: wormholeRings 1680ms cubic-bezier(0.16, 0.86, 0.18, 1) both;
+.portal-overlay-xianxia {
+  --portal-a: rgba(124, 58, 237, 0.90);
+  --portal-b: rgba(125, 211, 252, 0.78);
+  --portal-c: rgba(216, 180, 254, 0.56);
 }
 
-.portal-active::after {
-  z-index: 90;
+.portal-overlay-apocalypse {
+  --portal-a: rgba(245, 158, 11, 0.88);
+  --portal-b: rgba(20, 184, 166, 0.78);
+  --portal-c: rgba(248, 113, 113, 0.50);
+}
+
+.portal-vortex {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(86vw, 980px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotateX(66deg) translateZ(-260px);
+  transform-style: preserve-3d;
+  animation: portalVortexDive 1780ms cubic-bezier(0.13, 0.88, 0.14, 1) both;
+}
+
+.portal-horizon,
+.portal-core,
+.portal-ring,
+.portal-streak {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.portal-horizon {
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 50%, transparent 0 8%, rgba(153, 246, 228, 0.28) 9% 11%, transparent 12% 18%, rgba(2, 6, 23, 0.86) 54%),
-    radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.28), transparent 27%),
-    rgba(2, 6, 23, 0.34);
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 8%, var(--portal-b) 9% 21%, var(--portal-a) 22% 42%, rgba(2, 6, 23, 0) 62%);
+  box-shadow:
+    0 0 56px var(--portal-a),
+    0 0 140px var(--portal-b);
+  transform: translate(-50%, -50%) translateZ(70px);
+  animation: portalHorizonOpen 1780ms cubic-bezier(0.13, 0.88, 0.14, 1) both;
+}
+
+.portal-ring {
+  width: calc(160px + var(--i) * 78px);
+  aspect-ratio: 1;
+  border: 2px solid color-mix(in srgb, var(--portal-a), white 12%);
+  border-radius: 999px;
+  box-shadow:
+    0 0 16px var(--portal-a),
+    inset 0 0 22px rgba(255, 255, 255, 0.10);
   opacity: 0;
-  transform: scale(1.5);
-  animation: portalTunnel 1680ms cubic-bezier(0.16, 0.86, 0.18, 1) both;
+  transform:
+    translate(-50%, -50%)
+    translateZ(calc(160px - var(--i) * 92px))
+    rotateZ(calc(var(--i) * 18deg))
+    scale(calc(0.58 + var(--i) * 0.085));
+  animation: portalRingRush 1780ms cubic-bezier(0.12, 0.88, 0.16, 1) both;
+  animation-delay: calc(var(--i) * -42ms);
+}
+
+.portal-ring:nth-of-type(2n) {
+  border-color: color-mix(in srgb, var(--portal-b), white 8%);
+  box-shadow:
+    0 0 18px var(--portal-b),
+    inset 0 0 20px rgba(255, 255, 255, 0.12);
+}
+
+.portal-streak {
+  width: min(42vw, 520px);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--portal-b), white 20%), transparent);
+  opacity: 0;
+  transform:
+    translate(-50%, -50%)
+    rotateZ(calc(var(--i) * 15deg))
+    translateX(calc(110px + var(--lane) * 18px))
+    translateZ(calc(-340px + var(--depth) * 58px));
+  animation: portalStreakRush 1780ms cubic-bezier(0.12, 0.88, 0.16, 1) both;
+  animation-delay: calc(var(--i) * -26ms);
+}
+
+.portal-core {
+  width: 38%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, transparent 0 28%, rgba(255, 255, 255, 0.34) 29% 32%, transparent 33%),
+    conic-gradient(from 90deg, var(--portal-a), var(--portal-b), var(--portal-c), var(--portal-a));
+  mix-blend-mode: screen;
+  filter: blur(6px) saturate(1.28);
+  opacity: 0;
+  transform: translate(-50%, -50%) translateZ(-120px) scale(1.2);
+  animation: portalCoreSpin 1780ms cubic-bezier(0.12, 0.88, 0.16, 1) both;
 }
 
 .portal-active .genre-stage {
@@ -2520,7 +2622,7 @@ body.reader-dark {
 
 .genre-card.entering {
   z-index: 5;
-  animation: genreDive 1680ms cubic-bezier(0.16, 0.92, 0.18, 1) both;
+  animation: genreDive 1780ms cubic-bezier(0.14, 0.92, 0.14, 1) both;
   box-shadow: 0 40px 120px rgba(20, 184, 166, 0.34);
 }
 
@@ -2649,7 +2751,7 @@ body.reader-dark {
     font-size: 44px;
   }
 
-  .genre-card {
+  .genre-card:not(.entering) {
     transform: none !important;
   }
 }
@@ -2678,7 +2780,13 @@ body.reader-dark {
   }
 
   .portal-active::before,
-  .portal-active::after {
+  .portal-active::after,
+  .portal-overlay,
+  .portal-vortex,
+  .portal-horizon,
+  .portal-core,
+  .portal-ring,
+  .portal-streak {
     animation: none !important;
     opacity: 0 !important;
   }
@@ -2712,61 +2820,156 @@ body.reader-dark {
     filter: saturate(1);
   }
 
-  28% {
-    transform: translateY(-10px) translateZ(120px) rotateX(0deg) rotateY(0deg) scale(1.06);
-    filter: saturate(1.2) contrast(1.08);
+  22% {
+    transform: translateY(-16px) translateZ(160px) rotateX(0deg) rotateY(0deg) scale(1.08);
+    filter: saturate(1.18) contrast(1.08);
   }
 
-  68% {
-    transform: translateY(-4vh) translateZ(460px) rotateX(0deg) rotateY(0deg) scale(1.34);
-    filter: saturate(1.28) contrast(1.14) blur(0.15px);
+  54% {
+    transform: translateY(-5vh) translateZ(560px) rotateX(0deg) rotateY(0deg) scale(1.48);
+    filter: saturate(1.30) contrast(1.16) blur(0.2px);
   }
 
   100% {
-    transform: translateY(-8vh) translateZ(980px) rotateX(0deg) rotateY(0deg) scale(2.05);
-    filter: saturate(1.35) contrast(1.16) blur(1.2px);
+    transform: translateY(-9vh) translateZ(1380px) rotateX(0deg) rotateY(0deg) scale(2.72);
+    filter: saturate(1.36) contrast(1.18) blur(1.8px);
   }
 }
 
-@keyframes portalTunnel {
+@keyframes portalOverlayFade {
   0% {
     opacity: 0;
-    transform: scale(1.65) rotate(0deg);
+    backdrop-filter: blur(0);
   }
 
   18% {
-    opacity: 0.34;
+    opacity: 1;
   }
 
-  58% {
-    opacity: 0.94;
-    transform: scale(0.92) rotate(6deg);
+  74% {
+    opacity: 1;
+    backdrop-filter: blur(5px);
   }
 
   100% {
     opacity: 0;
-    transform: scale(0.26) rotate(18deg);
+    backdrop-filter: blur(0);
   }
 }
 
-@keyframes wormholeRings {
+@keyframes portalVortexDive {
   0% {
-    opacity: 0;
-    transform: scale(1.65) rotate(0deg);
+    transform: translate(-50%, -50%) rotateX(72deg) translateZ(-620px) scale(1.34) rotateZ(-12deg);
   }
 
-  24% {
-    opacity: 0.62;
+  46% {
+    transform: translate(-50%, -50%) rotateX(64deg) translateZ(-120px) scale(1.02) rotateZ(38deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotateX(58deg) translateZ(320px) scale(0.68) rotateZ(118deg);
+  }
+}
+
+@keyframes portalHorizonOpen {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(40px) scale(0.25);
+  }
+
+  34% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateZ(130px) scale(1.08);
   }
 
   72% {
-    opacity: 0.82;
-    transform: scale(0.78) rotate(150deg);
+    opacity: 1;
+    transform: translate(-50%, -50%) translateZ(220px) scale(2.4);
   }
 
   100% {
     opacity: 0;
-    transform: scale(0.18) rotate(260deg);
+    transform: translate(-50%, -50%) translateZ(430px) scale(5.2);
+  }
+}
+
+@keyframes portalRingRush {
+  0% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translateZ(calc(-720px - var(--i) * 70px))
+      rotateZ(calc(var(--i) * 18deg))
+      scale(calc(0.42 + var(--i) * 0.05));
+  }
+
+  20% {
+    opacity: 0.74;
+  }
+
+  62% {
+    opacity: 0.92;
+    transform:
+      translate(-50%, -50%)
+      translateZ(calc(-80px + var(--i) * 20px))
+      rotateZ(calc(120deg + var(--i) * 20deg))
+      scale(calc(0.78 + var(--i) * 0.13));
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translateZ(calc(620px + var(--i) * 74px))
+      rotateZ(calc(310deg + var(--i) * 26deg))
+      scale(calc(1.22 + var(--i) * 0.19));
+  }
+}
+
+@keyframes portalStreakRush {
+  0% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      rotateZ(calc(var(--i) * 15deg))
+      translateX(calc(70px + var(--lane) * 12px))
+      translateZ(calc(-780px + var(--depth) * 40px))
+      scaleX(0.32);
+  }
+
+  28% {
+    opacity: 0.82;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      rotateZ(calc(150deg + var(--i) * 15deg))
+      translateX(calc(260px + var(--lane) * 38px))
+      translateZ(calc(560px + var(--depth) * 84px))
+      scaleX(1.7);
+  }
+}
+
+@keyframes portalCoreSpin {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(-360px) scale(0.65) rotateZ(0deg);
+  }
+
+  30% {
+    opacity: 0.68;
+  }
+
+  76% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) translateZ(30px) scale(1.28) rotateZ(290deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(410px) scale(3.2) rotateZ(520deg);
   }
 }
 
