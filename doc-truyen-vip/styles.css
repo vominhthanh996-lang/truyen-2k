@@ -2496,9 +2496,6 @@ body.reader-dark {
 }
 
 .portal-overlay {
-  --portal-a: rgba(20, 184, 166, 0.92);
-  --portal-b: rgba(250, 204, 21, 0.78);
-  --portal-c: rgba(14, 165, 233, 0.56);
   --portal-destination: none;
   position: fixed;
   inset: 0;
@@ -2508,80 +2505,30 @@ body.reader-dark {
   perspective: 980px;
   perspective-origin: 50% 48%;
   background:
-    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.10), transparent 0 15%, rgba(2, 6, 23, 0.70) 38%, rgba(2, 6, 23, 0.98) 82%),
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--portal-a), transparent 74%), transparent 38%),
+    radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.08), transparent 0 16%, rgba(2, 6, 23, 0.70) 43%, rgba(2, 6, 23, 0.98) 78%),
     #020617;
   opacity: 0;
   animation: portalOverlayFade var(--portal-duration, 1780ms) cubic-bezier(0.14, 0.82, 0.15, 1) both;
-}
-
-.portal-overlay-xianxia {
-  --portal-a: rgba(124, 58, 237, 0.90);
-  --portal-b: rgba(125, 211, 252, 0.78);
-  --portal-c: rgba(216, 180, 254, 0.56);
-}
-
-.portal-overlay-apocalypse {
-  --portal-a: rgba(249, 115, 22, 0.96);
-  --portal-b: rgba(56, 189, 248, 0.88);
-  --portal-c: rgba(251, 191, 36, 0.62);
 }
 
 .portal-vortex {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(132vw, 1540px);
+  width: min(124vw, 1480px);
   aspect-ratio: 16 / 9;
-  transform: translate(-50%, -50%) rotateX(0deg) translateZ(-340px) scale(0.86);
+  transform: translate(-50%, -50%) translateZ(-280px) scale(0.72);
   transform-style: preserve-3d;
   animation: portalVortexDive var(--portal-duration, 1780ms) cubic-bezier(0.13, 0.88, 0.14, 1) both;
 }
 
 .portal-vortex::before,
 .portal-vortex::after {
-  content: "";
-  position: absolute;
-  inset: -24%;
-  left: 50%;
-  top: 50%;
-  width: 74%;
-  aspect-ratio: 1;
-  border-radius: 999px;
-  pointer-events: none;
-  transform: translate(-50%, -50%) translateZ(36px);
+  content: none;
 }
 
-.portal-vortex::before {
-  background:
-    conic-gradient(from 210deg, transparent 0 10%, var(--portal-a) 13% 18%, rgba(255, 255, 255, 0.72) 20% 21%, transparent 25% 42%, var(--portal-b) 45% 51%, rgba(255, 255, 255, 0.66) 54% 55%, transparent 61% 100%);
-  filter: blur(2px) saturate(1.45);
-  mix-blend-mode: screen;
-  opacity: 0;
-  -webkit-mask: radial-gradient(circle, transparent 0 39%, #000 43% 58%, transparent 63%);
-  mask: radial-gradient(circle, transparent 0 39%, #000 43% 58%, transparent 63%);
-  animation: portalEnergyShell var(--portal-duration, 1780ms) cubic-bezier(0.13, 0.88, 0.14, 1) both;
-}
-
-.portal-vortex::after {
-  width: 84%;
-  background:
-    radial-gradient(circle, transparent 0 47%, rgba(255, 255, 255, 0.42) 48% 49%, var(--portal-b) 50% 51%, transparent 54%),
-    radial-gradient(circle, transparent 0 43%, var(--portal-a) 44% 46%, transparent 49%);
-  filter: blur(6px);
-  mix-blend-mode: screen;
-  opacity: 0;
-  -webkit-mask: radial-gradient(circle, transparent 0 42%, #000 44% 56%, transparent 62%);
-  mask: radial-gradient(circle, transparent 0 42%, #000 44% 56%, transparent 62%);
-  animation: portalEnergyShell var(--portal-duration, 1780ms) cubic-bezier(0.13, 0.88, 0.14, 1) reverse both;
-}
-
-.portal-horizon,
 .portal-destination,
-.portal-iris,
-.portal-core,
-.portal-ring,
-.portal-streak {
+.portal-aperture {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -2590,107 +2537,35 @@ body.reader-dark {
 }
 
 .portal-destination {
-  width: min(76vw, 980px);
+  width: min(86vw, 1120px);
   aspect-ratio: 16 / 9;
   border-radius: 999px;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(249, 115, 22, 0.10), rgba(56, 189, 248, 0.10)),
+    radial-gradient(circle at 50% 50%, transparent 0 40%, rgba(2, 6, 23, 0.12) 68%, rgba(2, 6, 23, 0.62) 100%),
     var(--portal-destination) center / cover no-repeat;
   box-shadow:
-    0 0 42px rgba(255, 255, 255, 0.16),
-    0 0 120px color-mix(in srgb, var(--portal-a), transparent 34%),
-    inset 0 0 80px rgba(2, 6, 23, 0.28);
+    0 0 28px rgba(255, 255, 255, 0.12),
+    0 0 90px rgba(249, 115, 22, 0.18),
+    inset 0 0 96px rgba(2, 6, 23, 0.32);
   opacity: 0;
-  clip-path: ellipse(19% 22% at 50% 50%);
-  transform: translate(-50%, -50%) translateZ(-90px) scale(0.74);
+  clip-path: ellipse(4% 5% at 50% 50%);
+  transform: translate(-50%, -50%) translateZ(-180px) scale(0.44);
   z-index: 1;
   animation: portalDestinationOpen var(--portal-duration, 1780ms) cubic-bezier(0.13, 0.88, 0.14, 1) both;
 }
 
-.portal-iris {
-  width: min(92vw, 1120px);
+.portal-aperture {
+  width: min(88vw, 1160px);
   aspect-ratio: 1;
   border-radius: 999px;
   background:
-    radial-gradient(circle, transparent 0 42%, rgba(255, 255, 255, 0.44) 43% 44%, transparent 45% 47%, var(--portal-b) 48% 49%, transparent 51% 53%, var(--portal-a) 54% 56%, transparent 60%),
-    conic-gradient(from 20deg, color-mix(in srgb, var(--portal-a), transparent 38%), transparent 16%, color-mix(in srgb, var(--portal-b), transparent 36%), transparent 46%, color-mix(in srgb, var(--portal-c), transparent 48%), transparent 76%, color-mix(in srgb, var(--portal-a), transparent 38%));
-  filter: blur(1.4px) saturate(1.5);
-  mix-blend-mode: screen;
+    radial-gradient(circle, transparent 0 44%, rgba(255, 255, 255, 0.64) 45% 46%, rgba(249, 115, 22, 0.34) 47% 49%, transparent 53%);
   opacity: 0;
-  transform: translate(-50%, -50%) translateZ(26px) rotateZ(0deg) scale(0.42);
-  -webkit-mask: radial-gradient(circle, transparent 0 38%, #000 42% 61%, transparent 66%);
-  mask: radial-gradient(circle, transparent 0 38%, #000 42% 61%, transparent 66%);
+  transform: translate(-50%, -50%) translateZ(42px) scale(0.18);
+  filter: blur(0.2px);
   z-index: 2;
-  animation: portalIrisSpin var(--portal-duration, 1780ms) cubic-bezier(0.12, 0.88, 0.16, 1) both;
-}
-
-.portal-horizon {
-  width: min(58vw, 720px);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle, transparent 0 42%, rgba(255, 255, 255, 0.82) 43% 45%, var(--portal-b) 46% 48%, transparent 50% 52%, var(--portal-a) 53% 58%, transparent 62%);
-  box-shadow:
-    0 0 38px color-mix(in srgb, var(--portal-a), transparent 28%),
-    0 0 96px color-mix(in srgb, var(--portal-b), transparent 34%);
-  transform: translate(-50%, -50%) translateZ(70px);
-  z-index: 3;
-  animation: portalHorizonOpen var(--portal-duration, 1780ms) cubic-bezier(0.13, 0.88, 0.14, 1) both;
-}
-
-.portal-ring {
-  width: calc(220px + var(--i) * 94px);
-  aspect-ratio: 1;
-  border: 1px solid color-mix(in srgb, var(--portal-a), white 8%);
-  border-radius: 999px;
-  box-shadow:
-    0 0 10px color-mix(in srgb, var(--portal-a), transparent 20%),
-    inset 0 0 14px rgba(255, 255, 255, 0.08);
-  opacity: 0;
-  transform:
-    translate(-50%, -50%)
-    translateZ(calc(160px - var(--i) * 92px))
-    rotateZ(calc(var(--i) * 18deg))
-    scale(calc(0.58 + var(--i) * 0.085));
-  animation: portalRingRush var(--portal-duration, 1780ms) cubic-bezier(0.12, 0.88, 0.16, 1) both;
-  animation-delay: calc(var(--i) * -42ms);
-}
-
-.portal-ring:nth-of-type(2n) {
-  border-color: color-mix(in srgb, var(--portal-b), white 8%);
-  box-shadow:
-    0 0 12px color-mix(in srgb, var(--portal-b), transparent 18%),
-    inset 0 0 20px rgba(255, 255, 255, 0.12);
-}
-
-.portal-streak {
-  width: min(58vw, 760px);
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--portal-b), white 30%), color-mix(in srgb, var(--portal-a), white 18%), transparent);
-  opacity: 0;
-  transform:
-    translate(-50%, -50%)
-    rotateZ(calc(var(--i) * 15deg))
-    translateX(calc(110px + var(--lane) * 18px))
-    translateZ(calc(-340px + var(--depth) * 58px));
-  animation: portalStreakRush var(--portal-duration, 1780ms) cubic-bezier(0.12, 0.88, 0.16, 1) both;
-  animation-delay: calc(var(--i) * -26ms);
-}
-
-.portal-core {
-  width: min(68vw, 860px);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle, transparent 0 42%, rgba(255, 255, 255, 0.34) 43% 45%, transparent 48%),
-    conic-gradient(from 90deg, var(--portal-a), var(--portal-b), var(--portal-c), var(--portal-a));
-  mix-blend-mode: screen;
-  filter: blur(6px) saturate(1.28);
-  opacity: 0;
-  transform: translate(-50%, -50%) translateZ(-120px) scale(1.2);
-  animation: portalCoreSpin var(--portal-duration, 1780ms) cubic-bezier(0.12, 0.88, 0.16, 1) both;
+  animation: portalApertureOpen var(--portal-duration, 1780ms) cubic-bezier(0.13, 0.88, 0.14, 1) both;
 }
 
 .portal-overlay-compact {
@@ -2701,58 +2576,21 @@ body.reader-dark {
 }
 
 .portal-overlay-compact .portal-vortex {
-  width: min(150vw, 980px);
-  transform: translate(-50%, -50%) translateZ(-220px) scale(0.9);
+  width: min(118vw, 920px);
+  transform: translate(-50%, -50%) translateZ(-200px) scale(0.72);
   animation-name: portalVortexDiveCompact;
 }
 
-.portal-overlay-compact .portal-vortex::before,
-.portal-overlay-compact .portal-vortex::after {
-  width: 72%;
-  filter: none;
-}
-
-.portal-overlay-compact .portal-vortex::after {
-  display: none;
-}
-
 .portal-overlay-compact .portal-destination {
-  width: min(104vw, 820px);
-  clip-path: ellipse(28% 32% at 50% 50%);
+  width: min(104vw, 840px);
   box-shadow:
     0 0 28px rgba(255, 255, 255, 0.12),
-    0 0 64px color-mix(in srgb, var(--portal-a), transparent 44%),
     inset 0 0 52px rgba(2, 6, 23, 0.26);
   animation-name: portalDestinationOpenCompact;
 }
 
-.portal-overlay-compact .portal-iris {
-  width: min(118vw, 860px);
-  filter: none;
-  background:
-    radial-gradient(circle, transparent 0 43%, rgba(255, 255, 255, 0.34) 44% 45%, transparent 47% 50%, var(--portal-b) 51% 52%, transparent 54% 56%, var(--portal-a) 57% 59%, transparent 62%);
-}
-
-.portal-overlay-compact .portal-horizon {
-  width: min(86vw, 640px);
-  box-shadow:
-    0 0 24px color-mix(in srgb, var(--portal-a), transparent 38%),
-    0 0 48px color-mix(in srgb, var(--portal-b), transparent 48%);
-}
-
-.portal-overlay-compact .portal-ring {
-  width: calc(170px + var(--i) * 72px);
-  box-shadow: none;
-}
-
-.portal-overlay-compact .portal-streak {
-  width: min(70vw, 460px);
-  height: 2px;
-  opacity: 0.72;
-}
-
-.portal-overlay-compact .portal-core {
-  display: none;
+.portal-overlay-compact .portal-aperture {
+  width: min(108vw, 860px);
 }
 
 .portal-active .genre-stage {
@@ -2932,12 +2770,8 @@ body.reader-dark {
   .portal-active::after,
   .portal-overlay,
   .portal-vortex,
-  .portal-horizon,
   .portal-destination,
-  .portal-iris,
-  .portal-core,
-  .portal-ring,
-  .portal-streak {
+  .portal-aperture {
     animation: none !important;
     opacity: 0 !important;
   }
@@ -3097,150 +2931,26 @@ body.reader-dark {
   }
 }
 
-@keyframes portalIrisSpin {
+@keyframes portalApertureOpen {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) translateZ(-30px) rotateZ(-80deg) scale(0.2);
+    transform: translate(-50%, -50%) translateZ(40px) scale(0.16);
   }
 
-  20% {
-    opacity: 1;
-  }
-
-  64% {
-    opacity: 1;
-    transform: translate(-50%, -50%) translateZ(70px) rotateZ(180deg) scale(1.05);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(430px) rotateZ(420deg) scale(2.8);
-  }
-}
-
-@keyframes portalEnergyShell {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(-40px) scale(0.26) rotateZ(-90deg);
-  }
-
-  28% {
-    opacity: 0.92;
-  }
-
-  68% {
-    opacity: 1;
-    transform: translate(-50%, -50%) translateZ(80px) scale(1.04) rotateZ(160deg);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(500px) scale(3.3) rotateZ(360deg);
-  }
-}
-
-@keyframes portalHorizonOpen {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(-20px) scale(0.18);
-  }
-
-  34% {
-    opacity: 1;
-    transform: translate(-50%, -50%) translateZ(120px) scale(0.92);
-  }
-
-  72% {
-    opacity: 1;
-    transform: translate(-50%, -50%) translateZ(260px) scale(1.55);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(560px) scale(4.8);
-  }
-}
-
-@keyframes portalRingRush {
-  0% {
-    opacity: 0;
-    transform:
-      translate(-50%, -50%)
-      translateZ(calc(-860px - var(--i) * 80px))
-      rotateZ(calc(var(--i) * 18deg))
-      scale(calc(0.42 + var(--i) * 0.05));
-  }
-
-  20% {
-    opacity: 0.74;
+  24% {
+    opacity: 0.86;
   }
 
   62% {
-    opacity: 0.92;
-    transform:
-      translate(-50%, -50%)
-      translateZ(calc(-60px + var(--i) * 28px))
-      rotateZ(calc(120deg + var(--i) * 20deg))
-      scale(calc(0.78 + var(--i) * 0.13));
+    opacity: 0.48;
+    transform: translate(-50%, -50%) translateZ(160px) scale(1.02);
   }
 
   100% {
     opacity: 0;
-    transform:
-      translate(-50%, -50%)
-      translateZ(calc(780px + var(--i) * 92px))
-      rotateZ(calc(310deg + var(--i) * 26deg))
-      scale(calc(1.38 + var(--i) * 0.22));
+    transform: translate(-50%, -50%) translateZ(420px) scale(2.8);
   }
 }
-
-@keyframes portalStreakRush {
-  0% {
-    opacity: 0;
-    transform:
-      translate(-50%, -50%)
-      rotateZ(calc(var(--i) * 15deg))
-      translateX(calc(70px + var(--lane) * 12px))
-      translateZ(calc(-920px + var(--depth) * 42px))
-      scaleX(0.18);
-  }
-
-  28% {
-    opacity: 0.82;
-  }
-
-  100% {
-    opacity: 0;
-    transform:
-      translate(-50%, -50%)
-      rotateZ(calc(150deg + var(--i) * 15deg))
-      translateX(calc(360px + var(--lane) * 58px))
-      translateZ(calc(760px + var(--depth) * 104px))
-      scaleX(2.25);
-  }
-}
-
-@keyframes portalCoreSpin {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(-360px) scale(0.65) rotateZ(0deg);
-  }
-
-  30% {
-    opacity: 0.68;
-  }
-
-  76% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) translateZ(30px) scale(1.28) rotateZ(290deg);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateZ(410px) scale(3.2) rotateZ(520deg);
-  }
-}
-
 @keyframes worldHeroArrive {
   0% {
     opacity: 0;
@@ -3268,4 +2978,5 @@ body.reader-dark {
     filter: blur(0);
   }
 }
+
 

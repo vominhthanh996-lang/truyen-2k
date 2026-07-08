@@ -2527,23 +2527,13 @@ function buildGenrePortalOverlay(genre) {
   overlay.className = `portal-overlay portal-overlay-${genre.theme}${compactPortal ? " portal-overlay-compact" : ""}`;
   overlay.setAttribute("data-portal-overlay", genre.id);
   overlay.setAttribute("aria-hidden", "true");
-  overlay.style.setProperty("--portal-duration", compactPortal ? "1100ms" : "1780ms");
+  overlay.style.setProperty("--portal-duration", compactPortal ? "980ms" : "1450ms");
   if (genre.portalImage) overlay.style.setProperty("--portal-destination", `url("${genre.portalImage}")`);
 
-  const ringCount = compactPortal ? 7 : 11;
-  const streakCount = compactPortal ? 12 : 24;
-  const rings = Array.from({ length: ringCount }, (_, index) => `<span class="portal-ring" style="--i:${index}"></span>`).join("");
-  const streaks = Array.from({ length: streakCount }, (_, index) => (
-    `<span class="portal-streak" style="--i:${index};--lane:${index % 6};--depth:${index % 8}"></span>`
-  )).join("");
   overlay.innerHTML = `
     <div class="portal-vortex">
       <span class="portal-destination"></span>
-      <span class="portal-iris"></span>
-      <span class="portal-horizon"></span>
-      ${rings}
-      ${streaks}
-      <span class="portal-core"></span>
+      <span class="portal-aperture"></span>
     </div>
   `;
   return overlay;
@@ -2572,7 +2562,7 @@ function startGenrePortal(genreId, card) {
     location.hash = `#/the-loai/${genre.id}`;
     genrePortalLocked = false;
     setTimeout(clearGenrePortalOverlay, 120);
-  }, compactPortal ? 1100 : 1780);
+  }, compactPortal ? 980 : 1450);
 }
 
 function toast(message) {
