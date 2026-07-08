@@ -2844,18 +2844,28 @@ body.reader-dark {
 
 @keyframes portalVortexDive {
   0% {
-    transform: translate(-50%, -50%) translateZ(-520px) scale(0.78) rotateZ(-4deg);
-    filter: blur(2px) saturate(1.15);
+    transform: translate(-52%, -50%) translateZ(-520px) scale(0.78) rotateZ(-3deg);
+    filter: blur(1.6px) saturate(1.08);
   }
 
-  46% {
-    transform: translate(-50%, -50%) translateZ(-70px) scale(1.06) rotateZ(8deg);
-    filter: blur(0) saturate(1.38);
+  34% {
+    transform: translate(-48.5%, -50.8%) translateZ(-140px) scale(0.96) rotateZ(2deg);
+    filter: blur(0) saturate(1.18);
+  }
+
+  54% {
+    transform: translate(-51.2%, -49.4%) translateZ(-40px) scale(1.05) rotateZ(-1deg);
+    filter: blur(0) saturate(1.2);
+  }
+
+  72% {
+    transform: translate(-49.4%, -50%) translateZ(100px) scale(1.28) rotateZ(3deg);
+    filter: blur(0.2px) saturate(1.26);
   }
 
   100% {
-    transform: translate(-50%, -50%) translateZ(460px) scale(2.08) rotateZ(18deg);
-    filter: blur(1.8px) saturate(1.48);
+    transform: translate(-50%, -50%) translateZ(520px) scale(2.18) rotateZ(7deg);
+    filter: blur(1.2px) saturate(1.34);
   }
 }
 
@@ -2872,32 +2882,54 @@ body.reader-dark {
     clip-path: ellipse(21% 25% at 50% 50%);
   }
 
-  62% {
+  42% {
     opacity: 1;
-    clip-path: ellipse(39% 45% at 50% 50%);
-    transform: translate(-50%, -50%) translateZ(-10px) scale(1.05);
-    filter: blur(0) brightness(1.04) saturate(1.28);
+    clip-path: ellipse(34% 40% at 50% 50%);
+    transform: translate(-50%, -50%) translateZ(-70px) scale(0.88);
+    filter: blur(0) brightness(1.02) saturate(1.18);
+  }
+
+  60% {
+    opacity: 1;
+    clip-path: ellipse(43% 50% at 50% 50%);
+    transform: translate(-50%, -50%) translateZ(-40px) scale(0.98);
+    filter: blur(0) brightness(1.04) saturate(1.2);
+  }
+
+  76% {
+    opacity: 1;
+    clip-path: ellipse(56% 64% at 50% 50%);
+    transform: translate(-50%, -50%) translateZ(90px) scale(1.28);
+    filter: blur(0.2px) brightness(1.08) saturate(1.24);
   }
 
   100% {
     opacity: 1;
     clip-path: ellipse(80% 85% at 50% 50%);
-    transform: translate(-50%, -50%) translateZ(360px) scale(2.4);
-    filter: blur(1px) brightness(1.12) saturate(1.38);
+    transform: translate(-50%, -50%) translateZ(380px) scale(2.25);
+    filter: blur(0.8px) brightness(1.1) saturate(1.28);
   }
 }
 
 @keyframes portalVortexDiveCompact {
   0% {
-    transform: translate(-50%, -50%) translateZ(-260px) scale(0.82) rotateZ(-2deg);
+    transform: translate(-52%, -50%) translateZ(-260px) scale(0.82) rotateZ(-2deg);
   }
 
-  52% {
-    transform: translate(-50%, -50%) translateZ(-40px) scale(0.96) rotateZ(4deg);
+  36% {
+    transform: translate(-48.5%, -50.8%) translateZ(-80px) scale(0.9) rotateZ(2deg);
+  }
+
+  58% {
+    transform: translate(-51%, -49.4%) translateZ(-20px) scale(0.98) rotateZ(-1deg);
+  }
+
+  74% {
+    transform: translate(-49.4%, -50%) translateZ(90px) scale(1.16) rotateZ(2deg);
   }
 
   100% {
-    transform: translate(-50%, -50%) translateZ(260px) scale(1.44) rotateZ(10deg);
+    transform: translate(-50%, -50%) translateZ(280px) scale(1.56) rotateZ(5deg);
   }
 }
 
@@ -2916,18 +2948,25 @@ body.reader-dark {
     filter: brightness(0.98) saturate(1.16);
   }
 
-  68% {
+  52% {
     opacity: 1;
-    clip-path: ellipse(44% 52% at 50% 50%);
-    transform: translate(-50%, -50%) translateZ(30px) scale(0.98);
-    filter: brightness(1.04) saturate(1.22);
+    clip-path: ellipse(42% 50% at 50% 50%);
+    transform: translate(-50%, -50%) translateZ(-10px) scale(0.9);
+    filter: brightness(1.02) saturate(1.18);
+  }
+
+  74% {
+    opacity: 1;
+    clip-path: ellipse(56% 64% at 50% 50%);
+    transform: translate(-50%, -50%) translateZ(80px) scale(1.12);
+    filter: brightness(1.04) saturate(1.2);
   }
 
   100% {
     opacity: 1;
     clip-path: ellipse(72% 82% at 50% 50%);
-    transform: translate(-50%, -50%) translateZ(220px) scale(1.54);
-    filter: brightness(1.08) saturate(1.28);
+    transform: translate(-50%, -50%) translateZ(240px) scale(1.6);
+    filter: brightness(1.08) saturate(1.22);
   }
 }
 
@@ -2941,9 +2980,14 @@ body.reader-dark {
     opacity: 0.86;
   }
 
-  62% {
+  50% {
+    opacity: 0.66;
+    transform: translate(-50%, -50%) translateZ(120px) scale(0.86);
+  }
+
+  70% {
     opacity: 0.48;
-    transform: translate(-50%, -50%) translateZ(160px) scale(1.02);
+    transform: translate(-50%, -50%) translateZ(190px) scale(1.12);
   }
 
   100% {
