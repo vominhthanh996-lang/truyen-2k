@@ -30,6 +30,7 @@ const GENRES = [
     eyebrow: "Sinh tồn hậu tận thế",
     description: "Thành phố sụp đổ, nước sạch hiếm hơn vàng, mỗi bước đi đều có giá. Những truyện sinh tồn nơi nhân vật phải bò qua tro bụi để giành lại ngày mai.",
     cover: "assets/phe-tho-ta-nhat-duoc-ca-the-gioi-thumb.webp",
+    portalImage: "assets/genre-portals/tan-the-portal.webp",
     tone: "Tận thế · Sinh tồn · Đột biến",
     theme: "apocalypse",
     storyIds: [
@@ -2525,6 +2526,7 @@ function buildGenrePortalOverlay(genre) {
   overlay.className = `portal-overlay portal-overlay-${genre.theme}`;
   overlay.setAttribute("data-portal-overlay", genre.id);
   overlay.setAttribute("aria-hidden", "true");
+  if (genre.portalImage) overlay.style.setProperty("--portal-destination", `url("${genre.portalImage}")`);
 
   const rings = Array.from({ length: 11 }, (_, index) => `<span class="portal-ring" style="--i:${index}"></span>`).join("");
   const streaks = Array.from({ length: 24 }, (_, index) => (
@@ -2532,6 +2534,8 @@ function buildGenrePortalOverlay(genre) {
   )).join("");
   overlay.innerHTML = `
     <div class="portal-vortex">
+      <span class="portal-destination"></span>
+      <span class="portal-iris"></span>
       <span class="portal-horizon"></span>
       ${rings}
       ${streaks}
