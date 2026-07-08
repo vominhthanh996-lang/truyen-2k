@@ -2527,7 +2527,7 @@ function buildGenrePortalOverlay(genre) {
   overlay.className = `portal-overlay portal-overlay-${genre.theme}${compactPortal ? " portal-overlay-compact" : ""}`;
   overlay.setAttribute("data-portal-overlay", genre.id);
   overlay.setAttribute("aria-hidden", "true");
-  overlay.style.setProperty("--portal-duration", compactPortal ? "1450ms" : "1900ms");
+  overlay.style.setProperty("--portal-duration", compactPortal ? "1850ms" : "2350ms");
   if (genre.portalImage) overlay.style.setProperty("--portal-destination", `url("${genre.portalImage}")`);
 
   overlay.innerHTML = `
@@ -2562,7 +2562,7 @@ function startGenrePortal(genreId, card) {
     location.hash = `#/the-loai/${genre.id}`;
     genrePortalLocked = false;
     setTimeout(clearGenrePortalOverlay, 120);
-  }, compactPortal ? 1450 : 1900);
+  }, compactPortal ? 1850 : 2350);
 }
 
 function toast(message) {
