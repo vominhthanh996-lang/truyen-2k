@@ -2522,14 +2522,18 @@ function clearGenrePortalOverlay() {
 }
 
 function buildGenrePortalOverlay(genre) {
+  const compactPortal = window.matchMedia("(max-width: 920px), (pointer: coarse)").matches;
   const overlay = document.createElement("div");
-  overlay.className = `portal-overlay portal-overlay-${genre.theme}`;
+  overlay.className = `portal-overlay portal-overlay-${genre.theme}${compactPortal ? " portal-overlay-compact" : ""}`;
   overlay.setAttribute("data-portal-overlay", genre.id);
   overlay.setAttribute("aria-hidden", "true");
+  overlay.style.setProperty("--portal-duration", compactPortal ? "1100ms" : "1780ms");
   if (genre.portalImage) overlay.style.setProperty("--portal-destination", `url("${genre.portalImage}")`);
 
-  const rings = Array.from({ length: 11 }, (_, index) => `<span class="portal-ring" style="--i:${index}"></span>`).join("");
-  const streaks = Array.from({ length: 24 }, (_, index) => (
+  const ringCount = compactPortal ? 7 : 11;
+  const streakCount = compactPortal ? 12 : 24;
+  const rings = Array.from({ length: ringCount }, (_, index) => `<span class="portal-ring" style="--i:${index}"></span>`).join("");
+  const streaks = Array.from({ length: streakCount }, (_, index) => (
     `<span class="portal-streak" style="--i:${index};--lane:${index % 6};--depth:${index % 8}"></span>`
   )).join("");
   overlay.innerHTML = `
@@ -2554,6 +2558,7 @@ function startGenrePortal(genreId, card) {
   }
 
   genrePortalLocked = true;
+  const compactPortal = window.matchMedia("(max-width: 920px), (pointer: coarse)").matches;
   clearGenrePortalOverlay();
   document.body.append(buildGenrePortalOverlay(genre));
   document.body.classList.add("portal-active", `portal-${genre.theme}`);
@@ -2567,7 +2572,7 @@ function startGenrePortal(genreId, card) {
     location.hash = `#/the-loai/${genre.id}`;
     genrePortalLocked = false;
     setTimeout(clearGenrePortalOverlay, 120);
-  }, 1780);
+  }, compactPortal ? 1100 : 1780);
 }
 
 function toast(message) {
