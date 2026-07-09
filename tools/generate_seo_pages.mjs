@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import vm from "node:vm";
 
 const siteConfig = JSON.parse(await fs.readFile(path.resolve("tools/site-config.json"), "utf8"));
 const SITE_URL = siteConfig.siteUrl.replace(/\/$/, "");
@@ -59,10 +60,32 @@ async function loadBundledStories() {
     for (const match of source.matchAll(pattern)) {
       stories.push(JSON.parse(match[1]));
     }
-    return stories;
+    return applyBundledStoryExtensions(stories);
   } catch {
     return [];
   }
+}
+
+async function applyBundledStoryExtensions(stories) {
+  const extensionFiles = [
+    "city-flood-c002.js"
+  ];
+  const window = {
+    STORY_DATA: {
+      stories: structuredClone(stories),
+      plans: []
+    }
+  };
+  const context = vm.createContext({ window });
+  for (const fileName of extensionFiles) {
+    try {
+      const source = await fs.readFile(path.join(OUT_DIR, fileName), "utf8");
+      vm.runInContext(source, context, { filename: fileName });
+    } catch {
+      // Optional bundled chapter extension.
+    }
+  }
+  return window.STORY_DATA.stories || stories;
 }
 
 function pageShell({ title, description, canonical, body, schema, stylesheet }) {
