@@ -28,6 +28,14 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c002/c002-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 2 - cảnh ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c003": {
+    title: "Cảnh minh họa chương 3",
+    intro: "20 khung hình theo mạch thử lòng Tùng, chuyển kho mồi, và kho số mười ba bắt đầu bị lần ra.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c003/c003-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 3 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [
@@ -596,7 +604,7 @@ function chapterAudioUrl(storyId, chapter, voiceId = selectedAudioVoice()) {
 async function loadAudioManifest() {
   if (!preferGeneratedMp3) return;
   try {
-    const response = await fetch(`audio/verified-audio.json?v=20260709-city-c002-audio-1`, { cache: "no-store" });
+    const response = await fetch(`audio/verified-audio.json?v=20260709-city-c003-audio-1`, { cache: "no-store" });
     if (!response.ok) throw new Error(`audio manifest ${response.status}`);
     const payload = await response.json();
     (payload.files || []).forEach((item) => {
