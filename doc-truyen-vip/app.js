@@ -36,6 +36,14 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c003/c003-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 3 - cảnh ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c004": {
+    title: "Cảnh minh họa chương 4",
+    intro: "20 khung hình theo mạch kho số mười ba bị lộ, Diễm xuất hiện, và Lâm An dựng kho mồi để đánh lạc hướng Minh.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c004/c004-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 4 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [

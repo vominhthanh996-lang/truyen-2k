@@ -48,9 +48,9 @@ def ffprobe(path):
     return json.loads(result.stdout).get("format", {})
 
 
-def verify_file(chapter_id, preset, min_size, min_duration):
+def verify_file(chapter_id, preset, min_size, min_duration, file_prefix=""):
     suffix = PRESETS[preset]
-    path = AUDIO_DIR / f"{chapter_id}{suffix}.mp3"
+    path = AUDIO_DIR / f"{file_prefix}{chapter_id}{suffix}.mp3"
     if not path.exists():
         raise FileNotFoundError(f"Missing audio file: {path}")
     size = path.stat().st_size
@@ -80,6 +80,8 @@ def main():
     parser = argparse.ArgumentParser(description="Verify generated MP3 files and mark them safe to publish.")
     parser.add_argument("--chapter", action="append", required=True, help="Chapter id, for example c001. Repeatable.")
     parser.add_argument("--preset", action="append", choices=sorted(PRESETS), help="Preset id. Repeatable. Omit for all presets.")
+    parser.add_argument("--story-id", default="", help="Optional story id to store in the manifest entry.")
+    parser.add_argument("--file-prefix", default="", help="Prefix for MP3 filenames, for example city-flood-.")
     parser.add_argument("--min-size", type=int, default=100_000, help="Minimum MP3 size in bytes.")
     parser.add_argument("--min-duration", type=float, default=30.0, help="Minimum MP3 duration in seconds when ffprobe exists.")
     args = parser.parse_args()
@@ -87,14 +89,16 @@ def main():
     presets = args.preset or list(PRESETS)
     manifest = load_manifest()
     entries = {
-        (item["chapterId"], item["preset"]): item
+        (item.get("storyId", ""), item["chapterId"], item["preset"], item["file"]): item
         for item in manifest.get("files", [])
     }
 
     for chapter_id in args.chapter:
         for preset in presets:
-            item = verify_file(chapter_id, preset, args.min_size, args.min_duration)
-            entries[(chapter_id, preset)] = item
+            item = verify_file(chapter_id, preset, args.min_size, args.min_duration, args.file_prefix)
+            if args.story_id:
+                item["storyId"] = args.story_id
+            entries[(item.get("storyId", ""), chapter_id, preset, item["file"])] = item
             duration = item["duration"]
             duration_text = f"{duration:.1f}s" if duration else "unknown duration"
             print(f"verified {item['file']} ({item['size']} bytes, {duration_text})")

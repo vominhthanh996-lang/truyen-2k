@@ -11,6 +11,17 @@
       "verifiedAt": "2026-06-26T03:12:02.204096+00:00"
     },
     {
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+      "chapterId": "c001",
+      "preset": "nam-tram",
+      "file": "city-flood-c001-nam-tram.mp3",
+      "size": 4474845,
+      "duration": 733.392,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-07T09:25:57.414990+00:00"
+    },
+    {
       "chapterId": "c001",
       "preset": "nu-cam-xuc",
       "file": "c001.mp3",
@@ -19,6 +30,17 @@
       "provider": "edge",
       "verified": true,
       "verifiedAt": "2026-06-26T03:11:53.537966+00:00"
+    },
+    {
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+      "chapterId": "c001",
+      "preset": "nu-cam-xuc",
+      "file": "city-flood-c001.mp3",
+      "size": 4465533,
+      "duration": 715.896,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-07T09:25:57.338507+00:00"
     },
     {
       "chapterId": "c002",
@@ -31,6 +53,17 @@
       "verifiedAt": "2026-06-26T03:12:06.625927+00:00"
     },
     {
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+      "chapterId": "c002",
+      "preset": "nam-tram",
+      "file": "city-flood-c002-nam-tram.mp3",
+      "size": 7292325,
+      "duration": 1202.592,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-09T06:05:11.906455+00:00"
+    },
+    {
       "chapterId": "c002",
       "preset": "nu-cam-xuc",
       "file": "c002.mp3",
@@ -39,6 +72,17 @@
       "provider": "edge",
       "verified": true,
       "verifiedAt": "2026-06-26T03:12:04.264211+00:00"
+    },
+    {
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+      "chapterId": "c002",
+      "preset": "nu-cam-xuc",
+      "file": "city-flood-c002.mp3",
+      "size": 7226397,
+      "duration": 1170.096,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-09T06:05:11.906455+00:00"
     },
     {
       "chapterId": "c003",
@@ -51,6 +95,17 @@
       "verifiedAt": "2026-06-26T03:12:11.987519+00:00"
     },
     {
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+      "chapterId": "c003",
+      "preset": "nam-tram",
+      "file": "city-flood-c003-nam-tram.mp3",
+      "size": 8344509,
+      "duration": 1415.208,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-09T07:00:37.303887+00:00"
+    },
+    {
       "chapterId": "c003",
       "preset": "nu-cam-xuc",
       "file": "c003.mp3",
@@ -59,6 +114,17 @@
       "provider": "edge",
       "verified": true,
       "verifiedAt": "2026-06-26T03:12:09.115472+00:00"
+    },
+    {
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+      "chapterId": "c003",
+      "preset": "nu-cam-xuc",
+      "file": "city-flood-c003.mp3",
+      "size": 8375685,
+      "duration": 1382.544,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-09T07:00:37.303887+00:00"
     },
     {
       "chapterId": "c004",
@@ -72,6 +138,17 @@
     },
     {
       "chapterId": "c004",
+      "preset": "nam-tram",
+      "file": "city-flood-c004-nam-tram.mp3",
+      "size": 5828637,
+      "duration": 968.328,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-13T04:52:03.625532+00:00",
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim"
+    },
+    {
+      "chapterId": "c004",
       "preset": "nu-cam-xuc",
       "file": "c004.mp3",
       "size": 7374597,
@@ -79,6 +156,17 @@
       "provider": "edge",
       "verified": true,
       "verifiedAt": "2026-06-26T03:12:14.883084+00:00"
+    },
+    {
+      "chapterId": "c004",
+      "preset": "nu-cam-xuc",
+      "file": "city-flood-c004.mp3",
+      "size": 5831157,
+      "duration": 948.864,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-13T04:52:03.587079+00:00",
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim"
     },
     {
       "chapterId": "c005",
@@ -629,72 +717,6 @@
       "provider": "edge",
       "verified": true,
       "verifiedAt": "2026-07-02T06:18:07.217609+00:00"
-    },
-    {
-      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
-      "chapterId": "c001",
-      "preset": "nam-tram",
-      "file": "city-flood-c001-nam-tram.mp3",
-      "size": 4474845,
-      "duration": 733.392,
-      "provider": "edge",
-      "verified": true,
-      "verifiedAt": "2026-07-07T09:25:57.414990+00:00"
-    },
-    {
-      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
-      "chapterId": "c001",
-      "preset": "nu-cam-xuc",
-      "file": "city-flood-c001.mp3",
-      "size": 4465533,
-      "duration": 715.896,
-      "provider": "edge",
-      "verified": true,
-      "verifiedAt": "2026-07-07T09:25:57.338507+00:00"
-    },
-    {
-      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
-      "chapterId": "c002",
-      "preset": "nam-tram",
-      "file": "city-flood-c002-nam-tram.mp3",
-      "size": 7292325,
-      "duration": 1202.592,
-      "provider": "edge",
-      "verified": true,
-      "verifiedAt": "2026-07-09T06:05:11.906455+00:00"
-    },
-    {
-      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
-      "chapterId": "c002",
-      "preset": "nu-cam-xuc",
-      "file": "city-flood-c002.mp3",
-      "size": 7226397,
-      "duration": 1170.096,
-      "provider": "edge",
-      "verified": true,
-      "verifiedAt": "2026-07-09T06:05:11.906455+00:00"
-    },
-    {
-      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
-      "chapterId": "c003",
-      "preset": "nam-tram",
-      "file": "city-flood-c003-nam-tram.mp3",
-      "size": 8344509,
-      "duration": 1415.208,
-      "provider": "edge",
-      "verified": true,
-      "verifiedAt": "2026-07-09T07:00:37.303887+00:00"
-    },
-    {
-      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
-      "chapterId": "c003",
-      "preset": "nu-cam-xuc",
-      "file": "city-flood-c003.mp3",
-      "size": 8375685,
-      "duration": 1382.544,
-      "provider": "edge",
-      "verified": true,
-      "verifiedAt": "2026-07-09T07:00:37.303887+00:00"
     }
   ]
 }

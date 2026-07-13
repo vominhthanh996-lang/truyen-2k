@@ -50,11 +50,63 @@ def log(message):
 
 
 def load_data():
+    if not DATA_JS.exists():
+        return load_modular_story_data()
     raw = DATA_JS.read_text(encoding="utf-8")
     match = re.match(r"\s*window\.STORY_DATA\s*=\s*(.*);\s*$", raw, re.S)
     if not match:
         raise ValueError(f"Cannot parse {DATA_JS}")
     return json.loads(match.group(1))
+
+
+def bundled_node():
+    node = shutil.which("node")
+    if node:
+        return node
+    candidate = (
+        Path.home()
+        / ".cache"
+        / "codex-runtimes"
+        / "codex-primary-runtime"
+        / "dependencies"
+        / "node"
+        / "bin"
+        / "node.exe"
+    )
+    if candidate.exists():
+        return str(candidate)
+    raise RuntimeError("Node.js is required to load modular story scripts.")
+
+
+def load_modular_story_data():
+    scripts = [
+        Path("doc-truyen-vip/extra-stories.js"),
+        Path("doc-truyen-vip/city-flood-c002.js"),
+        Path("doc-truyen-vip/city-flood-c003.js"),
+        Path("doc-truyen-vip/city-flood-c004.js"),
+    ]
+    existing_scripts = [script for script in scripts if script.exists()]
+    if not existing_scripts:
+        raise FileNotFoundError(f"Missing {DATA_JS} and no modular story scripts were found.")
+
+    loader = r"""
+const fs = require("fs");
+const vm = require("vm");
+const scripts = JSON.parse(process.argv[1]);
+global.window = { STORY_DATA: { plans: [], stories: [] } };
+for (const file of scripts) {
+  vm.runInThisContext(fs.readFileSync(file, "utf8"), { filename: file });
+}
+process.stdout.write(JSON.stringify(global.window.STORY_DATA));
+"""
+    result = subprocess.run(
+        [bundled_node(), "-e", loader, json.dumps([str(path) for path in existing_scripts])],
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    return json.loads(result.stdout)
 
 
 def is_verified_provider(chapter_id, preset_id, filename, provider):
@@ -251,6 +303,7 @@ async def generate_chapter_mp3(
 async def main():
     parser = argparse.ArgumentParser(description="Generate MP3 audio files for story chapters.")
     parser.add_argument("--chapter", help="Chapter id to generate, for example c001.")
+    parser.add_argument("--story-id", help="Only generate chapters from this story id.")
     parser.add_argument("--all", action="store_true", help="Generate every chapter.")
     parser.add_argument("--limit", type=int, default=0, help="Generate at most N chapters.")
     parser.add_argument("--preset", choices=sorted(VOICE_PRESETS), default="nu-cam-xuc", help="Narration voice preset.")
@@ -261,6 +314,7 @@ async def main():
     parser.add_argument("--max-chars", type=int, default=MAX_CHARS, help="Maximum characters per TTS chunk.")
     parser.add_argument("--retries", type=int, default=3, help="Retries per TTS chunk.")
     parser.add_argument("--overwrite", action="store_true", help="Regenerate existing MP3 files.")
+    parser.add_argument("--output-prefix", default="", help="Prefix for MP3 filenames, for example city-flood-.")
     args = parser.parse_args()
 
     if not args.all and not args.chapter:
@@ -279,6 +333,8 @@ async def main():
     data = load_data()
     chapters = []
     for story in data.get("stories", []):
+        if args.story_id and story.get("id") != args.story_id:
+            continue
         for chapter in story.get("chapters", []):
             if args.all or chapter.get("id") == args.chapter:
                 chapters.append((story, chapter))
@@ -295,7 +351,7 @@ async def main():
     manifest = []
     for story, chapter in chapters:
         chapter_id = chapter["id"]
-        output = OUT_DIR / f"{chapter_id}{suffix}.mp3"
+        output = OUT_DIR / f"{args.output_prefix}{chapter_id}{suffix}.mp3"
         edge_verified = is_verified_provider(chapter_id, args.preset, output.name, EDGE_REQUIRED_PROVIDER)
         if output.exists() and not args.overwrite and edge_verified:
             log(f"skip {chapter_id}: {output}")
@@ -323,7 +379,7 @@ async def main():
                 "title": chapter["title"],
                 "preset": args.preset,
                 "label": preset["label"],
-                "audioUrl": f"audio/{chapter_id}{suffix}.mp3",
+                "audioUrl": f"audio/{output.name}",
             }
         )
 
