@@ -44,6 +44,14 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c004/c004-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 4 - cảnh ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c005": {
+    title: "Cảnh minh họa chương 5",
+    intro: "20 khung hình theo mạch chai nhựa rỗng, cái bẫy kho mồi, và cuộc đối đầu đêm mưa với Minh.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c005/c005-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 5 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [
