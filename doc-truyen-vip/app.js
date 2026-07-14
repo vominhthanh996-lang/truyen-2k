@@ -52,6 +52,14 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c005/c005-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 5 - cảnh ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c006": {
+    title: "Cảnh minh họa chương 6",
+    intro: "20 khung hình theo mạch tầng mười bảy trở thành chiến trường camera, hàng xóm, thang máy và tin đồn.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c006/c006-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 6 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [

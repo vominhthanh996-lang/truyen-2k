@@ -222,6 +222,17 @@
     },
     {
       "chapterId": "c006",
+      "preset": "nam-tram",
+      "file": "city-flood-c006-nam-tram.mp3",
+      "size": 7494381,
+      "duration": 1255.512,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-14T03:03:48.822519+00:00",
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim"
+    },
+    {
+      "chapterId": "c006",
       "preset": "nu-cam-xuc",
       "file": "c006.mp3",
       "size": 5158653,
@@ -229,6 +240,17 @@
       "provider": "edge",
       "verified": true,
       "verifiedAt": "2026-06-26T03:12:27.672008+00:00"
+    },
+    {
+      "chapterId": "c006",
+      "preset": "nu-cam-xuc",
+      "file": "city-flood-c006.mp3",
+      "size": 7511013,
+      "duration": 1227.912,
+      "provider": "edge",
+      "verified": true,
+      "verifiedAt": "2026-07-14T03:03:48.565769+00:00",
+      "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim"
     },
     {
       "chapterId": "c007",
