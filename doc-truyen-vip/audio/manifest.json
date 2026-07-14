@@ -14,5 +14,21 @@
     "preset": "nam-tram",
     "label": "Nam Minh - nam Việt",
     "audioUrl": "audio/city-flood-c006-nam-tram.mp3"
+  },
+  {
+    "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+    "chapterId": "c007",
+    "title": "Chương 7: Cái Giá Của Một Cái Tai",
+    "preset": "nu-cam-xuc",
+    "label": "Nữ cảm xúc",
+    "audioUrl": "audio/city-flood-c007.mp3"
+  },
+  {
+    "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+    "chapterId": "c007",
+    "title": "Chương 7: Cái Giá Của Một Cái Tai",
+    "preset": "nam-tram",
+    "label": "Nam Minh - nam Việt",
+    "audioUrl": "audio/city-flood-c007-nam-tram.mp3"
   }
 ]
