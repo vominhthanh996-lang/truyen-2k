@@ -30,5 +30,21 @@
     "preset": "nam-tram",
     "label": "Nam Minh - nam Việt",
     "audioUrl": "audio/city-flood-c007-nam-tram.mp3"
+  },
+  {
+    "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+    "chapterId": "c008",
+    "title": "Chương 8: Luật Mới Trong Chợ Cũ",
+    "preset": "nu-cam-xuc",
+    "label": "Nữ cảm xúc",
+    "audioUrl": "audio/city-flood-c008.mp3"
+  },
+  {
+    "storyId": "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim",
+    "chapterId": "c008",
+    "title": "Chương 8: Luật Mới Trong Chợ Cũ",
+    "preset": "nam-tram",
+    "label": "Nam Minh - nam Việt",
+    "audioUrl": "audio/city-flood-c008-nam-tram.mp3"
   }
 ]

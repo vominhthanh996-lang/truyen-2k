@@ -69,7 +69,12 @@ async function loadBundledStories() {
 async function applyBundledStoryExtensions(stories) {
   const extensionFiles = [
     "city-flood-c002.js",
-    "city-flood-c003.js"
+    "city-flood-c003.js",
+    "city-flood-c004.js",
+    "city-flood-c005.js",
+    "city-flood-c006.js",
+    "city-flood-c007.js",
+    "city-flood-c008.js"
   ];
   const window = {
     STORY_DATA: {

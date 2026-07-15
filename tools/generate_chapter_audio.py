@@ -87,6 +87,7 @@ def load_modular_story_data():
         Path("doc-truyen-vip/city-flood-c005.js"),
         Path("doc-truyen-vip/city-flood-c006.js"),
         Path("doc-truyen-vip/city-flood-c007.js"),
+        Path("doc-truyen-vip/city-flood-c008.js"),
     ]
     existing_scripts = [script for script in scripts if script.exists()]
     if not existing_scripts:
