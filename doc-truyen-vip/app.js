@@ -76,6 +76,22 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c008/c008-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 8 - cảnh ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c009": {
+    title: "Cảnh minh họa chương 9",
+    intro: "20 khung hình theo mạch áo mưa xám, tầng hầm B2, máy bơm nối sai chiều và hiểm họa quay về cửa 1703.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c009/c009-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 9 - cảnh ${index + 1}`
+    }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c010": {
+    title: "Cảnh minh họa chương 10",
+    intro: "20 khung hình theo mạch ba tiếng gõ ngoài cửa 1703, cuộc thoát khỏi B2 và dấu muối dưới mái che.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c010/c010-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 10 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [
