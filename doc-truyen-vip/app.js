@@ -92,6 +92,14 @@ const STORY_ART_PACKS = {
       src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c010/c010-scene-${String(index + 1).padStart(2, "0")}.webp`,
       alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 10 - cảnh ${index + 1}`
     }))
+  },
+  "toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim:c011": {
+    title: "Cảnh minh họa chương 11",
+    intro: "20 khung hình mở Tập 2: luật của Đội Muối, mẫu nước ngoài vòng bạc và hạt muối không tan trong mưa.",
+    images: Array.from({ length: 20 }, (_, index) => ({
+      src: `assets/story-art/toi-tro-ve-30-ngay-truoc-khi-thanh-pho-chim/c011/c011-scene-${String(index + 1).padStart(2, "0")}.webp`,
+      alt: `Tôi Trở Về 30 Ngày Trước Khi Thành Phố Chìm - chương 11 - cảnh ${index + 1}`
+    }))
   }
 };
 const GENRES = [
