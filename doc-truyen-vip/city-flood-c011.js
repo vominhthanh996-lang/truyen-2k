@@ -11,7 +11,7 @@
 
   story.chapters.push({
     id: "c011",
-    title: "Chương 11: Luật Của Người Rắc Muối",
+    title: "Chương 11: Luật Của Đội Muối",
     episodeTitle: "Tập 02: Người Đặt Luật Trong Mưa",
     free: true,
     price: 0,
