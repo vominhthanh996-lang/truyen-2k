@@ -4,21 +4,21 @@ Visual continuity: Vietnamese near-future rainstorm survival thriller. Lâm An i
 
 ## Scene 01
 Related text beat: Ông Bảy nhắn lại “Đừng chạm vào” sau khi Lâm An hỏi luật của ai.
-Visual prompt: Lâm An under an old mall loading awning in heavy rain, phone screen glow lighting her tense face, Diễm in pale rain poncho beside her, wet concrete and dark street beyond, a tiny silver tape ring with a white salt grain on the ground in foreground.
+Visual prompt: Lâm An under an old mall loading awning in heavy rain, phone screen glow lighting her tense face, Diễm in pale rain poncho beside her, wet concrete and dark street beyond, a tiny silver tape ring with a white desiccant-like dry salt bead on the ground in foreground.
 Aspect ratio: 16:9.
 Negative constraints: no readable phone text, no watermark.
 Filename: c011-scene-01.webp
 
 ## Scene 02
-Related text beat: Hạt muối khô nằm giữa vòng bạc dưới mép bê tông giữa cơn mưa.
-Visual prompt: Macro cinematic shot under a concrete ledge: a small ring made of silver aluminum tape on damp concrete, a single dry white salt grain in the center, rain pouring just outside the ledge, cold reflections, tense clue.
+Related text beat: Hạt muối khô/hạt hút ẩm phủ màng sáp nằm giữa vòng bạc dưới mép bê tông giữa cơn mưa.
+Visual prompt: Macro cinematic shot under a concrete ledge: a small ring made of silver aluminum tape on damp concrete, a single dry white desiccant-like salt bead with a waxy waterproof surface in the center, rain pouring just outside the ledge, cold reflections, tense clue.
 Aspect ratio: 16:9.
 Negative constraints: no readable markings, no watermark.
 Filename: c011-scene-02.webp
 
 ## Scene 03
 Related text beat: Tin nhắn không số: “Nếu hỏi luật, phải biết giá.”
-Visual prompt: Close over-shoulder shot of Lâm An holding a wet smartphone under rain shadow, screen glow on her fingers but no readable text, Diễm's worried face blurred behind, silver salt clue on ground out of focus.
+Visual prompt: Close over-shoulder shot of Lâm An holding a wet smartphone under rain shadow, screen glow on her fingers but no readable text, Diễm's worried face blurred behind, silver tape ring and dry salt bead clue on ground out of focus.
 Aspect ratio: 16:9.
 Negative constraints: no readable text, no UI logos, no watermark.
 Filename: c011-scene-03.webp
@@ -31,22 +31,22 @@ Negative constraints: no readable signs, no clear attacker, no watermark.
 Filename: c011-scene-04.webp
 
 ## Scene 05
-Related text beat: Lâm An giả vờ chụp hạt muối nhưng lấy cả lan can vào khung.
-Visual prompt: Lâm An crouches under the loading awning, photographing the tiny salt clue on concrete while angling her phone toward a dark second-floor railing reflected in rainwater, tactical calm, Diễm watches.
+Related text beat: Lâm An giả vờ chụp hạt muối khô nhưng lấy cả lan can vào khung.
+Visual prompt: Lâm An crouches under the loading awning, photographing the tiny dry salt bead clue on concrete while angling her phone toward a dark second-floor railing reflected in rainwater, tactical calm, Diễm watches.
 Aspect ratio: 16:9.
 Negative constraints: no readable phone screen, no watermark.
 Filename: c011-scene-05.webp
 
 ## Scene 06
 Related text beat: Lâm An lấy mẫu nước ngoài vòng bạc bằng tăm bông bọc nilon.
-Visual prompt: Close cinematic detail: gloved or careful wet fingers holding a cotton swab wrapped in clear plastic, touching damp concrete outside a silver tape ring, white salt grain nearby but untouched, rain reflections, forensic survival improvisation.
+Visual prompt: Close cinematic detail: gloved or careful wet fingers holding a cotton swab wrapped in clear plastic, touching damp concrete outside a silver tape ring, white dry salt bead nearby but untouched, rain reflections, forensic survival improvisation.
 Aspect ratio: 16:9.
 Negative constraints: no blood, no readable text, no watermark.
 Filename: c011-scene-06.webp
 
 ## Scene 07
-Related text beat: Hạt muối khẽ rung khi đầu tăm bông lại gần.
-Visual prompt: Extreme macro suspense image of a single white salt grain inside a silver tape ring, tiny ripple and vibration implied by water droplets around it, a cotton swab hovering nearby without touching, dramatic shallow depth of field.
+Related text beat: Bụi nhôm trên hạt muối khô ánh lên, cho thấy đây là mồi đánh dấu người chạm gần.
+Visual prompt: Extreme macro suspense image of a single white dry salt bead inside a silver tape ring, faint metallic aluminum dust glinting on its waxy surface, a cotton swab hovering nearby without touching, dramatic shallow depth of field.
 Aspect ratio: 16:9.
 Negative constraints: no text, no watermark.
 Filename: c011-scene-07.webp
@@ -108,8 +108,8 @@ Negative constraints: no readable phone text, no watermark.
 Filename: c011-scene-15.webp
 
 ## Scene 16
-Related text beat: Ông Bảy giải thích vòng bạc có muối khô nghĩa là nơi đó đã bị ghi nợ.
-Visual prompt: Stylized but realistic clue tableau: several closed doors reflected in black rainwater, each reflection faintly touched by a silver ring and white salt grain, suggesting doors, debt, and hidden law without text.
+Related text beat: Ông Bảy giải thích muối khô là vật tư giữ thuốc, pin, lương khô; vòng bạc có hạt muối nghĩa là nơi đó đã bị ghi nợ.
+Visual prompt: Stylized but realistic clue tableau: several closed doors reflected in black rainwater, each reflection faintly touched by a silver ring and a white dry salt/desiccant bead, suggesting doors, debt, preserved supplies, and hidden law without text.
 Aspect ratio: 16:9.
 Negative constraints: no readable numbers, no watermark.
 Filename: c011-scene-16.webp
@@ -136,8 +136,8 @@ Negative constraints: no violence, no watermark.
 Filename: c011-scene-19.webp
 
 ## Scene 20
-Related text beat: Một hạt muối trắng không chìm, không tan, trôi về phía chân Lâm An.
-Visual prompt: Final hook image: black rainwater flowing through a dark alley, a single white salt grain floating impossibly on the surface, drifting toward Lâm An's black rubber boots, city lights distorted in ripples, eerie and cinematic.
+Related text beat: Một hạt muối khô phủ màng sáp không chìm, không tan, trôi về phía chân Lâm An như vừa được thả từ bóng tối.
+Visual prompt: Final hook image: black rainwater flowing through a dark alley, a single white wax-coated dry salt/desiccant bead floating on the surface, drifting toward Lâm An's black rubber boots, city lights distorted in ripples, eerie and cinematic.
 Aspect ratio: 16:9.
 Negative constraints: no text, no watermark.
 Filename: c011-scene-20.webp
