@@ -1,12 +1,12 @@
 {
-  "run_count": 477,
+  "run_count": 478,
   "sources_seen": {},
-  "last_run_utc": "2026-07-22T15:40:10Z",
+  "last_run_utc": "2026-07-22T17:13:12Z",
   "last_source": {
-    "name": "TV Tropes - Apocalyptic Logistics",
-    "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/ApocalypticLogistics",
+    "name": "TV Tropes - Scavenger World",
+    "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/ScavengerWorld",
     "kind": "trope reference",
-    "focus": "logic hậu cần sau tận thế: nước, thức ăn, vận chuyển, thuốc"
+    "focus": "xã hội nhặt rác, giá trị vật tư, luật sống còn"
   },
   "last_mode": "fallback"
 }
