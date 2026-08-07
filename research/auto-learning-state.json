@@ -1,12 +1,12 @@
 {
-  "run_count": 672,
+  "run_count": 673,
   "sources_seen": {},
-  "last_run_utc": "2026-08-07T14:10:42Z",
+  "last_run_utc": "2026-08-07T15:23:32Z",
   "last_source": {
-    "name": "Reedsy - Story structure",
-    "url": "https://blog.reedsy.com/guide/story-structure/",
-    "kind": "craft guide",
-    "focus": "nhịp arc, biến cố, cao trào, trả cảm xúc"
+    "name": "Helping Writers Become Authors - Scene Structure",
+    "url": "https://www.helpingwritersbecomeauthors.com/scene-structure/",
+    "kind": "craft article",
+    "focus": "cấu trúc cảnh Goal-Conflict-Disaster và nhịp sau cảnh"
   },
   "last_mode": "fallback"
 }
