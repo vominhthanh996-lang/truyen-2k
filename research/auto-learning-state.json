@@ -1,12 +1,12 @@
 {
-  "run_count": 701,
+  "run_count": 702,
   "sources_seen": {},
-  "last_run_utc": "2026-08-08T17:56:09Z",
+  "last_run_utc": "2026-08-08T18:34:38Z",
   "last_source": {
-    "name": "Now Novel - Character development",
-    "url": "https://www.nownovel.com/blog/character-development/",
-    "kind": "craft article",
-    "focus": "nội tâm, biến chuyển nhân vật, vết thương và lựa chọn"
+    "name": "Reedsy - Story structure",
+    "url": "https://blog.reedsy.com/guide/story-structure/",
+    "kind": "craft guide",
+    "focus": "nhịp arc, biến cố, cao trào, trả cảm xúc"
   },
   "last_mode": "fallback"
 }
