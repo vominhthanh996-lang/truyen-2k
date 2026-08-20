@@ -1,12 +1,12 @@
 {
-  "run_count": 1022,
+  "run_count": 1023,
   "sources_seen": {},
-  "last_run_utc": "2026-08-20T00:59:59Z",
+  "last_run_utc": "2026-08-20T02:19:43Z",
   "last_source": {
-    "name": "MasterClass - Cliffhanger craft",
-    "url": "https://www.masterclass.com/articles/how-to-write-a-cliffhanger-14-tips-for-writing-page-turning-cliffhangers-with-dan-brown-and-rl-stine",
-    "kind": "public craft article",
-    "focus": "hook cuối chương, suspense, câu hỏi chưa giải"
+    "name": "TV Tropes - Apocalyptic Logistics",
+    "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/ApocalypticLogistics",
+    "kind": "trope reference",
+    "focus": "logic hậu cần sau tận thế: nước, thức ăn, vận chuyển, thuốc"
   },
   "last_mode": "fallback"
 }
