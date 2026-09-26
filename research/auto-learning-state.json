@@ -1,12 +1,12 @@
 {
-  "run_count": 1432,
+  "run_count": 1433,
   "sources_seen": {},
-  "last_run_utc": "2026-09-26T15:40:23Z",
+  "last_run_utc": "2026-09-26T18:57:30Z",
   "last_source": {
-    "name": "TV Tropes - Scavenger World",
-    "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/ScavengerWorld",
-    "kind": "trope reference",
-    "focus": "xã hội nhặt rác, giá trị vật tư, luật sống còn"
+    "name": "Now Novel - Character development",
+    "url": "https://www.nownovel.com/blog/character-development/",
+    "kind": "craft article",
+    "focus": "nội tâm, biến chuyển nhân vật, vết thương và lựa chọn"
   },
   "last_mode": "fallback"
 }
